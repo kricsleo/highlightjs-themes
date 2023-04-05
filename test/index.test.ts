@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import theme from './themes/gentle-clean-vitesse.json'
-import { generateHljsCSS, generateHljsTheme } from '../src'
+import { batchGenerateHljsCSS, generateHljsCSS, generateHljsTheme } from '../src'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -8,12 +8,19 @@ const _dirname = typeof __dirname !== 'undefined'
   ? __dirname
   : path.dirname(fileURLToPath(import.meta.url))
 
+const themeDir = _dirname + '/themes/**/*.json'
 const gentleCleanThemePath = path.resolve(_dirname, './themes/gentle-clean-vitesse.json')
 const vitesseThemePath = path.resolve(_dirname, './themes/vitesse-light.json')
 const dest = path.resolve(_dirname, './themes')
 describe('generateHljsTheme', () => {
+  it('batchGenerateFiles', async () => {
+    const p = batchGenerateHljsCSS(themeDir, dest)
+    await expect(p).resolves.toMatchInlineSnapshot('undefined')
+  })
+
   it('generateFile', async () => {
-    generateHljsCSS(vitesseThemePath, dest)
+    const p = generateHljsCSS(vitesseThemePath, dest)
+    await expect(p).resolves.toMatchInlineSnapshot('undefined')
   })
 
   it('generateCSS', () => {

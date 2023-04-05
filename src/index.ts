@@ -1,6 +1,7 @@
 import { VSCodeTheme, VSCodeThemeTokenScope, VSCodeThemeTokenSettings } from './types'
 import fs from 'fs/promises'
 import path from 'path'
+import glob from 'fast-glob'
 
 // highlightjs -> TextMate(Used by VS Code)
 const SCOPE_MAP = {
@@ -289,6 +290,12 @@ export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: stri
   await fs.writeFile(filepath, css)
 }
 
+export async function batchGenerateHljsCSS(VSCodeThemeSource: string | string[], hljsCSSDist: string) {
+  const files = await glob(VSCodeThemeSource, { absolute: true })
+  console.log('files', VSCodeThemeSource, files)
+  await Promise.all(files.map(file => generateHljsCSS(file, hljsCSSDist)))
+}
+
 function parseVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
   const tokenMatchScores = theme.tokenColors.map(token => ({
     token, 
@@ -344,9 +351,9 @@ function formatVSCodeTokenStyle(settings: VSCodeThemeTokenSettings) {
 }
 
 function normalizeThemeName(name: string) {
-  const hyphenateRE = /\B([A-Z\s])/
+  const hyphenateRE = /\B([A-Z\s])/g
   return name.trim()
-    .replace(/\s/, '-')
+    .replace(/\s/g, '-')
     .replace(hyphenateRE, '-$1')
     .toLowerCase()
 }
