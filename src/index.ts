@@ -1,4 +1,6 @@
 import { VSCodeTheme, VSCodeThemeTokenScope, VSCodeThemeTokenSettings } from './types'
+import fs from 'fs/promises'
+import path from 'path'
 
 // highlightjs -> TextMate(Used by VS Code)
 const SCOPE_MAP = {
@@ -272,10 +274,18 @@ export function generateHljsTheme(theme: VSCodeTheme) {
     return all
   }, '')
   css = `.hljs {
-    color:${theme.colors['editor.foreground']};
-    background:${theme.colors['editor.background']};
+  color:${theme.colors['editor.foreground']};
+  background:${theme.colors['editor.background']};
 }\n` + css
   return css
+}
+
+export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: string) {
+  const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8'})
+  const theme = JSON.parse(content)
+  const css = generateHljsTheme(theme)
+  const filepath = path.resolve(hljsCSSDist, `${theme.name}.css`)
+  await fs.writeFile(filepath, css)
 }
 
 function parseVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
@@ -284,7 +294,7 @@ function parseVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
     score: scoreScopeMatch(scope, token.scope)
   }))
   const maxMatchedToken = tokenMatchScores.reduce((all, cur) => cur.score > all.score ? cur : all, tokenMatchScores[0])
-  return maxMatchedToken.score 
+  return maxMatchedToken.score
     ? formatVSCodeTokenStyle(maxMatchedToken.token.settings)
     : null
 }
@@ -320,10 +330,6 @@ function scoreScopeMatch(sourceScope: string, targetScope: VSCodeThemeTokenScope
   }
 }
 
-function formatVSCodeDefaultStyle(theme: VSCodeTheme) {
-  // return 
-}
-
 function formatVSCodeTokenStyle(settings: VSCodeThemeTokenSettings) {
   const mappings = [
     ['color', settings.foreground],
@@ -333,5 +339,5 @@ function formatVSCodeTokenStyle(settings: VSCodeThemeTokenSettings) {
   const styles = mappings.filter(mapping => mapping[1])
     .map(mapping => `${mapping[0]}:${mapping[1]};`)
     .join('\n')
-  return `{\n  ${styles}\n}`
+  return styles ? `{\n  ${styles}\n}` : null
 }

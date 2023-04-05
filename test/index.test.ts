@@ -1,13 +1,25 @@
 import { describe, expect, it } from 'vitest'
-import theme from '../playground/gentle-clean-vitesse.json'
-import { generateHljsTheme } from '../src'
+import theme from './gentle-clean-vitesse.json'
+import { generateHljsCSS, generateHljsTheme } from '../src'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
+const _dirname = typeof __dirname !== 'undefined'
+  ? __dirname
+  : path.dirname(fileURLToPath(import.meta.url))
+
+const VSCodeThemePath = path.resolve(_dirname, './gentle-clean-vitesse.json')
+const dest = path.resolve(_dirname, './')
 describe('generateHljsTheme', () => {
-  it('generate', () => {
+  it('generateFile', async () => {
+    generateHljsCSS(VSCodeThemePath, dest)
+  })
+
+  it('generateCSS', () => {
     expect(generateHljsTheme(theme)).toMatchInlineSnapshot(`
       ".hljs {
-          color:#dbd7caee;
-          background:#1e1e1e;
+        color:#dbd7caee;
+        background:#1e1e1e;
       }
       .hljs-keyword {
         color:#d4976cef;
@@ -87,9 +99,6 @@ describe('generateHljsTheme', () => {
       }
       .hljs-code {
         color:#6394bfef;
-      }
-      .hljs-emphasis {
-        
       }
       .hljs-strong {
         font-style:bold;
