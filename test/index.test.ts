@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import theme from './gentle-clean-vitesse.json'
+import theme from './themes/gentle-clean-vitesse.json'
 import { generateHljsCSS, generateHljsTheme } from '../src'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -8,11 +8,12 @@ const _dirname = typeof __dirname !== 'undefined'
   ? __dirname
   : path.dirname(fileURLToPath(import.meta.url))
 
-const VSCodeThemePath = path.resolve(_dirname, './gentle-clean-vitesse.json')
-const dest = path.resolve(_dirname, './')
+const gentleCleanThemePath = path.resolve(_dirname, './themes/gentle-clean-vitesse.json')
+const vitesseThemePath = path.resolve(_dirname, './themes/vitesse-light.json')
+const dest = path.resolve(_dirname, './themes')
 describe('generateHljsTheme', () => {
   it('generateFile', async () => {
-    generateHljsCSS(VSCodeThemePath, dest)
+    generateHljsCSS(vitesseThemePath, dest)
   })
 
   it('generateCSS', () => {

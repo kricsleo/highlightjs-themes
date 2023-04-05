@@ -284,7 +284,8 @@ export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: stri
   const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8'})
   const theme = JSON.parse(content)
   const css = generateHljsTheme(theme)
-  const filepath = path.resolve(hljsCSSDist, `${theme.name}.css`)
+  const filename = `${normalizeThemeName(theme.name)}.css`
+  const filepath = path.resolve(hljsCSSDist, filename)
   await fs.writeFile(filepath, css)
 }
 
@@ -340,4 +341,12 @@ function formatVSCodeTokenStyle(settings: VSCodeThemeTokenSettings) {
     .map(mapping => `${mapping[0]}:${mapping[1]};`)
     .join('\n')
   return styles ? `{\n  ${styles}\n}` : null
+}
+
+function normalizeThemeName(name: string) {
+  const hyphenateRE = /\B([A-Z\s])/
+  return name.trim()
+    .replace(/\s/, '-')
+    .replace(hyphenateRE, '-$1')
+    .toLowerCase()
 }
