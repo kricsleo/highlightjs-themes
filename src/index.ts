@@ -5,8 +5,22 @@ const SCOPE_MAP = {
   keyword: 'keyword'
 }
 
+export function generateHljsTheme(theme: VSCodeTheme) {
+  let css = Object.entries(SCOPE_MAP).reduce((all, [hljsScope, VSCodeScope]) => {
+    const style = parseVSCodeScopeStyle(VSCodeScope, theme)
+    if(style) {
+      all += `.hljs-${hljsScope} ${style}`
+    }
+    return all
+  }, '')
+  css = `.hljs {
+    color:${theme.colors['editor.foreground']};
+    background:${theme.colors['editor.background']};
+}` + css
+  return css
+}
+
 function parseVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
-  let style = ''
   const tokenMatchScores = theme.tokenColors.map(token => ({
     token, 
     score: scoreScopeMatch(scope, token.scope)
@@ -61,5 +75,5 @@ function formatVSCodeTokenStyle(settings: VSCodeThemeTokenSettings) {
   const styles = mappings.filter(mapping => mapping[1])
     .map(mapping => `${mapping[0]}:${mapping[1]};`)
     .join('\n')
-  return `{\n${styles}\n}`
+  return `{\n  ${styles}\n}`
 }
