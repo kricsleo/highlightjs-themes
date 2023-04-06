@@ -1,4 +1,4 @@
-- Typescript
+#### Typescript
 
 <br >
 
@@ -21,7 +21,7 @@ myArray.forEach(() => { }); // fat arrow syntax
 
 <br >
 
-- HTML
+#### HTML
 
 <br >
 
@@ -39,7 +39,9 @@ myArray.forEach(() => { }); // fat arrow syntax
 </body>
 ```
 
-- CSS
+<br >
+
+#### CSS
 
 <br >
 

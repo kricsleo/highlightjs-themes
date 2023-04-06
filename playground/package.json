@@ -13,8 +13,7 @@
   "dependencies": {
     "@vueuse/core": "^9.13.0",
     "unplugin-markdown-2-html": "^0.1.5",
-    "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.36.0",
