@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import Header from '~/components/Header.vue'
 import { html } from './index.md'
+import ToggleTheme from './components/ToggleTheme.vue'
+import Header from '~/components/Header.vue'
 </script>
 
 <template>
-  <div max-w-800 mx-auto px-15 font-sans text="gray-700 dark:gray-200">
+  <div max-w-800 mx-auto px-15>
     <main>
       <Header />
+      <ToggleTheme />
       <div v-html="html" />
     </main>
   </div>
