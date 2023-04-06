@@ -1,7 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Hello.vue > should render 1`] = `
-"<div text-center=\\"\\"><button i-carbon-sun=\\"\\" dark:i-carbon-moon=\\"\\" text-40=\\"\\" hover:op-80=\\"\\" transition-opacity=\\"\\"></button>
-  <p text-20=\\"\\"> You are here. </p>
-</div>"
-`;

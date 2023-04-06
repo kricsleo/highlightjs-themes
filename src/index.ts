@@ -263,23 +263,33 @@ const SCOPE_MAP = {
 };
 
 export function generateHljsTheme(theme: VSCodeTheme) {
-  let css = Object.values(SCOPE_MAP).reduce((all, option) => {
-    const style = parseVSCodeScopeStyle(option.scope, theme)
-    if(style) {
-      const className = option.class
+  const styles = Object.values(SCOPE_MAP)
+    .map(option => {
+      const style = parseVSCodeScopeStyle(option.scope, theme)
+      const selector = option.class
         .split(' ')
         .map(t => '.' + t)
         .join('')
-      all += `${className} ${style}\n`
+      return { selector, style }
+    })
+    .filter(css => css.style) as Array<{selector: string; style: string}>
+  const combinedStyles = styles.reduce((all, style) => {
+    if(all[style.style]) {
+      all[style.style] += `,\n${style.selector}`
+    } else {
+      all[style.style] = style.selector
     }
     return all
-  }, '')
-  css = `pre code.hljs {
+  }, {} as Record<string, string>)
+  const tokenCSS = Object.entries(combinedStyles)
+    .map(([style, selector]) => `${selector} ${style}`)
+    .join('\n')
+  const wrapperCSS = `pre code.hljs {
   display: block;
   color:${theme.colors['editor.foreground']};
   background:${theme.colors['editor.background']};
-}\n` + css
-  return css
+}`
+  return wrapperCSS + '\n' + tokenCSS
 }
 
 export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: string) {
@@ -345,9 +355,9 @@ function formatVSCodeTokenStyle(settings: VSCodeThemeTokenSettings) {
     ['font-style', settings.fontStyle],
   ]
   const styles = mappings.filter(mapping => mapping[1])
-    .map(mapping => `${mapping[0]}:${mapping[1]};`)
+    .map(mapping => `  ${mapping[0]}: ${mapping[1]};`)
     .join('\n')
-  return styles ? `{\n  ${styles}\n}` : null
+  return styles ? `{\n${styles}\n}` : null
 }
 
 function normalizeThemeName(name: string) {
