@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "vitest"
-  },
   "keywords": [],
   "author": "kricsleo",
   "license": "MIT",
+  "scripts": {
+    "generate": "tsx scripts/generate"
+  },
   "dependencies": {
+    "chalk": "4",
     "fast-glob": "^3.2.12",
     "tsx": "^3.12.6"
   },
