@@ -29,7 +29,7 @@ cp tmp/themes/*.json themes/
 echo "> Done copying themes"
 
 echo "> Generating highlightjs themes"
-npx tsx scripts/themes/normalizeThemePaths.ts
+npx tsx scripts/generate.ts
 echo "> Done generating highlightjs themes"
 
 # echo "> Updating source files"
