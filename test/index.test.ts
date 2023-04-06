@@ -25,7 +25,8 @@ describe('generateHljsTheme', () => {
 
   it('generateCSS', () => {
     expect(generateHljsTheme(theme)).toMatchInlineSnapshot(`
-      ".hljs {
+      "pre code.hljs {
+        display: block;
         color:#dbd7caee;
         background:#1e1e1e;
       }

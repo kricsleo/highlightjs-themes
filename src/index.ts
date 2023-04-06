@@ -274,7 +274,8 @@ export function generateHljsTheme(theme: VSCodeTheme) {
     }
     return all
   }, '')
-  css = `.hljs {
+  css = `pre code.hljs {
+  display: block;
   color:${theme.colors['editor.foreground']};
   background:${theme.colors['editor.background']};
 }\n` + css
@@ -292,7 +293,6 @@ export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: stri
 
 export async function batchGenerateHljsCSS(VSCodeThemeSource: string | string[], hljsCSSDist: string) {
   const files = await glob(VSCodeThemeSource, { absolute: true })
-  console.log('files', VSCodeThemeSource, files)
   await Promise.all(files.map(file => generateHljsCSS(file, hljsCSSDist)))
 }
 
