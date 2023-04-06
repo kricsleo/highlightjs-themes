@@ -1,6 +1,7 @@
+<br >
+
 #### Typescript
 
-<br >
 
 ```ts
 class MyClass {
@@ -23,8 +24,6 @@ myArray.forEach(() => { }); // fat arrow syntax
 
 #### HTML
 
-<br >
-
 ```html
 <!DOCTYPE html>
 <head>
@@ -42,8 +41,6 @@ myArray.forEach(() => { }); // fat arrow syntax
 <br >
 
 #### CSS
-
-<br >
 
 ```css
 @font-face {

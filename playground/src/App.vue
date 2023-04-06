@@ -5,7 +5,7 @@ import Header from '~/components/Header.vue'
 </script>
 
 <template>
-  <div max-w-800 mx-auto px-15>
+  <div max-w-800 mx-auto px-15 pb-20>
     <main>
       <Header />
       <ToggleTheme />
@@ -18,7 +18,6 @@ import Header from '~/components/Header.vue'
 *::-webkit-scrollbar {
   display: none;
 }
-
 html,
 body,
 #app {
@@ -26,8 +25,9 @@ body,
   margin: 0;
   padding: 0;
 }
-
-pre {
+pre code {
+  display: block;
+  padding: 10px 15px;
   border: 1px solid gray;
   border-radius: .25em;
 }

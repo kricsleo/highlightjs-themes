@@ -24,7 +24,7 @@ function toggleTheme(theme: string) {
 </script>
 
 <template>
-  <RadioGroup v-model="theme" my-10>
+  <RadioGroup v-model="theme">
     <RadioGroupLabel text-20>
       Themes
     </RadioGroupLabel>
@@ -36,7 +36,7 @@ function toggleTheme(theme: string) {
         :value="the"
         @click="toggleTheme(the)"
       >
-        <button shrink-0 p-15 b-1 rounded-4 :class="{ 'bg-rose b-rose': checked }">
+        <button shrink-0 p-15 b="1 gray" rounded-4 :class="{ 'bg-rose b-rose': checked }">
           {{ the }}
         </button>
       </RadioGroupOption>
