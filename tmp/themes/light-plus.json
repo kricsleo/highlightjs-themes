@@ -3,11 +3,6 @@
   "name": "light-plus",
   "tokenColors": [
     {
-      "settings": {
-        "foreground": "#000000"
-      }
-    },
-    {
       "scope": [
         "meta.embedded",
         "source.groovy.embedded",

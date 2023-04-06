@@ -1,8 +1,5 @@
-pre code.hljs {
-  display: block;
-  color:#393a34;
-  background:#ffffff;
-}
+  color: #393a34
+
 .hljs-keyword,
 .hljs-literal,
 .hljs-selector-tag,

@@ -3,11 +3,6 @@
   "name": "dark-plus",
   "tokenColors": [
     {
-      "settings": {
-        "foreground": "#D4D4D4"
-      }
-    },
-    {
       "scope": [
         "meta.embedded",
         "source.groovy.embedded",

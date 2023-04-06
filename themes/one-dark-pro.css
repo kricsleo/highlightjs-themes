@@ -1,8 +1,5 @@
-pre code.hljs {
-  display: block;
-  color:#abb2bf;
-  background:#282c34;
-}
+  color: #abb2bf
+
 .hljs-keyword,
 .hljs-meta.keyword_,
 .hljs-link {

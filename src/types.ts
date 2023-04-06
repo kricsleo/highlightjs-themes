@@ -8,9 +8,9 @@ export type VSCodeThemeTokenSettings = {
 export interface VSCodeTheme {
   name: string
   type?: 'dark' | 'light' | string
-  colors: {
-    'editor.foreground': string
-    'editor.background': string
+  colors?: {
+    'editor.foreground'?: string
+    'editor.background'?: string
   }
   tokenColors: Array<{
     scope: VSCodeThemeTokenScope

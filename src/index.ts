@@ -284,17 +284,21 @@ export function generateHljsTheme(theme: VSCodeTheme) {
   const tokenCSS = Object.entries(combinedStyles)
     .map(([style, selector]) => `${selector} ${style}`)
     .join('\n')
-  const wrapperCSS = `pre code.hljs {
-  display: block;
-  color:${theme.colors['editor.foreground']};
-  background:${theme.colors['editor.background']};
-}`
+  const foreground = theme.colors?.['editor.foreground']
+  const background = theme.colors?.['editor.background']
+  const wrapperCSS = 
+    'pre code.hljs {\n'
+    + '  display: block;\n'
+    + foreground ? `  color: ${foreground}\n` : ''
+    + background ? `  background: ${background}\n` : ''
+    + '}'
   return wrapperCSS + '\n' + tokenCSS
 }
 
 export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: string) {
   const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8'})
   const theme = JSON.parse(content)
+  console.log('VSCodeThemePath', VSCodeThemePath)
   const css = generateHljsTheme(theme)
   const filename = `${normalizeThemeName(theme.name)}.css`
   const filepath = path.resolve(hljsCSSDist, filename)
@@ -306,6 +310,10 @@ export async function batchGenerateHljsCSS(VSCodeThemeSource: string | string[],
   await Promise.all(files.map(file => generateHljsCSS(file, hljsCSSDist)))
 }
 
+/**
+ * todo: using tokenColors.[global settting] (no scope specified)
+ * with colors.editor.foreground & colors.editor.background
+ */
 function parseVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
   const tokenMatchScores = theme.tokenColors.map(token => ({
     token, 
@@ -327,6 +335,8 @@ function scoreScopeMatch(sourceScope: string, targetScope: VSCodeThemeTokenScope
       const maxScore = scores.reduce((all, cur) => Math.max(all, cur), 0)
       return maxScore
     }
+  } else if(!targetScope) {
+    return 0
   } else {
     if(sourceScope === targetScope) {
       return Infinity

@@ -26,15 +26,9 @@ const darkPlusContent = readJsonC('dark_plus.json')
 
 if (darkVSContent && darkPlusContent) {
   delete darkPlusContent['include']
-  const darkDefaultFgBgTokenColor = {
-    settings: {
-      foreground: darkVSContent['colors']['editor.foreground']
-    }
-  }
   darkPlusContent.name = 'dark-plus'
   darkPlusContent.colors = { ...darkVSContent.colors }
   darkPlusContent.tokenColors = [
-    darkDefaultFgBgTokenColor,
     ...darkVSContent.tokenColors,
     ...darkPlusContent.tokenColors
   ]
@@ -54,15 +48,9 @@ const lightPlusContent = readJsonC('light_plus.json')
 
 if (lightVSContent && lightPlusContent) {
   delete lightPlusContent['include']
-  const lightDefaultFgBgTokenColor = {
-    settings: {
-      foreground: lightVSContent['colors']['editor.foreground']
-    }
-  }
   lightPlusContent.name = 'light-plus'
   lightPlusContent.colors = { ...lightVSContent.colors }
   lightPlusContent.tokenColors = [
-    lightDefaultFgBgTokenColor,
     ...lightVSContent.tokenColors,
     ...lightPlusContent.tokenColors
   ]
