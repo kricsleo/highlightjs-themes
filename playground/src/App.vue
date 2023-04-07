@@ -5,13 +5,11 @@ import Header from '~/components/Header.vue'
 </script>
 
 <template>
-  <div max-w-800 mx-auto px-15 pb-20>
-    <main>
-      <Header />
-      <ToggleTheme />
-      <div v-html="html" />
-    </main>
-  </div>
+  <main max-w-800 mx-auto px-15 pb-20>
+    <Header />
+    <ToggleTheme shrink-0 />
+    <div v-html="html" />
+  </main>
 </template>
 
 <style>

@@ -1,7 +1,7 @@
 pre code.hljs {
   display: block;
-  color: #d8dee9;
-  background: #2e3440;
+  color: #d8dee9ff;
+  background: #2e3440ff;
 }
 .hljs-keyword,
 .hljs-literal,

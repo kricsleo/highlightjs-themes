@@ -23,13 +23,12 @@ export function generateHljsTheme(theme: VSCodeTheme) {
   const tokenCSS = Object.entries(combinedStyles)
     .map(([style, selector]) => `${selector} ${style}`)
     .join('\n')
-  const foreground = theme.colors?.['editor.foreground']
-  const background = theme.colors?.['editor.background']
+  const global = parseDefaultThemeSetting(theme)
   const wrapperCSS = 
     'pre code.hljs {\n' +
     '  display: block;\n' +
-    (foreground ? `  color: ${foreground};\n` : '') + 
-    (background ? `  background: ${background};\n` : '') + 
+    `  color: ${global.foreground};\n` + 
+    `  background: ${global.background};\n` + 
     '}'
   return wrapperCSS + '\n' + tokenCSS
 }
@@ -37,7 +36,7 @@ export function generateHljsTheme(theme: VSCodeTheme) {
 export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: string) {
   const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8'})
   const theme = JSON.parse(content)
-  console.log('VSCodeThemePath', VSCodeThemePath)
+  console.log('Generating', VSCodeThemePath)
   const css = generateHljsTheme(theme)
   const filename = `${normalizeThemeName(theme.name)}.css`
   const filepath = path.resolve(hljsCSSDist, filename)
@@ -54,10 +53,12 @@ export async function batchGenerateHljsCSS(VSCodeThemeSource: string | string[],
  * with colors.editor.foreground & colors.editor.background
  */
 function parseVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
-  const tokenMatchScores = theme.tokenColors.map(token => ({
-    token, 
-    score: scoreScopeMatch(scope, token.scope)
-  }))
+  const tokenMatchScores = theme.tokenColors
+    .filter(token => token.scope)
+    .map(token => ({
+      token, 
+      score: scoreScopeMatch(scope, token.scope!)
+    }))
   const maxMatchedToken = tokenMatchScores.reduce((all, cur) => cur.score > all.score ? cur : all, tokenMatchScores[0])
   return maxMatchedToken.score
     ? formatVSCodeTokenStyle(maxMatchedToken.token.settings)
@@ -107,6 +108,35 @@ function formatVSCodeTokenStyle(settings: VSCodeThemeTokenSettings) {
     .map(mapping => `  ${mapping[0]}: ${mapping[1]};`)
     .join('\n')
   return styles ? `{\n${styles}\n}` : null
+}
+
+/**
+ * https://github.com/microsoft/vscode/blob/f7f05dee53fb33fe023db2e06e30a89d3094488f/src/vs/platform/theme/common/colorRegistry.ts#L258-L268
+ */
+const VSCODE_FALLBACK_EDITOR_FG = { light: '#333333', dark: '#bbbbbb' }
+const VSCODE_FALLBACK_EDITOR_BG = { light: '#fffffe', dark: '#1e1e1e' }
+/**
+ * Forked from shiki
+ * https://github.com/shikijs/shiki/blob/db5c62bda448a3c95c66b9cc0b4980b8df856a58/packages/shiki/src/loader.ts#L208
+ */
+function parseDefaultThemeSetting(theme: VSCodeTheme) {
+  const settings = theme.settings || theme.tokenColors
+  const globalSetting = settings?.find(s => !s.scope)
+  const foreground = parseDefaultColor('foreground')
+  const background = parseDefaultColor('background')
+  return { foreground, background }
+
+  function parseDefaultColor(key: 'foreground' | 'background') {
+    const VSCODE_FALLBACK_SETTING = key === 'foreground' 
+      ? VSCODE_FALLBACK_EDITOR_FG
+      : VSCODE_FALLBACK_EDITOR_BG
+    const VSCODE_FALLBACK_COLOR = theme.type === 'light' 
+      ? VSCODE_FALLBACK_SETTING.light 
+      : VSCODE_FALLBACK_SETTING.dark
+    return globalSetting?.settings?.[key]
+      || theme.colors?.[`editor.${key}`]
+      || VSCODE_FALLBACK_COLOR
+  }
 }
 
 function formatHljsSelector(hljsScope: string) {
