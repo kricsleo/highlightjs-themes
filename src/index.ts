@@ -1,10 +1,8 @@
-import { VSCodeTheme, VSCodeThemeTokenScope, VSCodeThemeTokenSettings } from './types'
-import { SCOPE_MAPPINGS } from './mappings'
+import { SelectorScope, VSCodeTheme, VSCodeThemeTokenScope, VSCodeThemeTokenSettings } from './types'
 
-export function generateHljsTheme(theme: VSCodeTheme) {
-  const styles = Object.entries(SCOPE_MAPPINGS)
-    .map(([hljsScope, VSCodeScope]) => {
-      const selector = formatHljsSelector(hljsScope)
+export function generateTheme(selectorScope: SelectorScope, theme: VSCodeTheme) {
+  const styles = Object.entries(selectorScope)
+    .map(([selector, VSCodeScope]) => {
       const style = parseVSCodeScopeStyle(VSCodeScope, theme)
       return { selector, style }
     })
@@ -22,7 +20,7 @@ export function generateHljsTheme(theme: VSCodeTheme) {
     .join('\n')
   const global = parseDefaultThemeSetting(theme)
   const wrapperCSS = 
-    'pre code.hljs {\n' +
+    'pre code {\n' +
     '  display: block;\n' +
     `  color: ${global.foreground};\n` + 
     `  background: ${global.background};\n` + 
@@ -119,14 +117,4 @@ function parseDefaultThemeSetting(theme: VSCodeTheme) {
       || theme.colors?.[`editor.${key}`]
       || VSCODE_FALLBACK_COLOR
   }
-}
-
-function formatHljsSelector(hljsScope: string) {
-  const [parent, ...children] = hljsScope.split('.')
-  const parentSelector = `.hljs-${parent}`
-  const childrenSelector = children.reduce(
-    (all, cur, idx) => all + `.${cur}${'_'.repeat(idx + 1)}`, 
-    ''
-  )
-  return parentSelector + childrenSelector
 }

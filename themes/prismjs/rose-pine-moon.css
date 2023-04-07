@@ -1,0 +1,58 @@
+pre code {
+  display: block;
+  color: #e0def4;
+  background: #232136;
+}
+.token.keyword,
+.token.operator,
+.token.constant,
+.token.atrule,
+.token.important,
+.token.symbol,
+.token.directive {
+  color: #3e8fb0;
+}
+.token.punctuation {
+  color: #908caa;
+}
+.token.comment {
+  color: #6e6a86;
+  font-style: italic;
+}
+.token.string,
+.token.attr-value,
+.token.regex {
+  color: #f6c177;
+}
+.token.number,
+.token.boolean,
+.token.function,
+.token.class-name,
+.token.label {
+  color: #ea9a97;
+}
+.token.variable {
+  color: #ea9a97;
+  font-style: italic;
+}
+.token.property,
+.token.selector,
+.token.tag,
+.token.namespace,
+.token.url,
+.token.module,
+.token.type,
+.token.inline {
+  color: #9ccfd8;
+}
+.token.attr-name {
+  color: #c4a7e7;
+  font-style: italic;
+}
+.token.builtin {
+  color: #eb6f92;
+  font-style: italic;
+}
+.token.parameter {
+  color: #c4a7e7;
+}

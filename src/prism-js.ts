@@ -1,9 +1,11 @@
+import { generateTheme } from '.'
+import { SelectorScope, VSCodeTheme } from './types'
 
 /**
  * Prism.js scope -> TextMate(Used by VS Code) scope
  * @see https://macromates.com/manual/en/language_grammars#naming_conventions
  */
-export const PRISMJS_SCOPE_MAPPINGS = {
+const PRISMJS_SCOPE_MAPPINGS = {
   // Prism.js 中的关键字对应于 TextMate 中的关键字
   '.token.keyword': 'keyword',
   // Prism.js 中的运算符对应于 TextMate 中的运算符
@@ -51,4 +53,18 @@ export const PRISMJS_SCOPE_MAPPINGS = {
   '.token.label': 'entity.name.label',
   '.token.directive': 'keyword.control.directive',
   '.token.inline': 'markup.inline'
+}
+
+export function generatePrismjsTheme(VSCodeTheme: VSCodeTheme) {
+  const prismjsSelectorScope = generatePrismjsSelectorScope()
+  const theme = generateTheme(prismjsSelectorScope, VSCodeTheme)
+  return theme
+}
+
+function generatePrismjsSelectorScope() {
+  const selectorScope: SelectorScope = {}
+  Object.entries(PRISMJS_SCOPE_MAPPINGS).forEach(
+    ([prismjsScope, VSCodeScope]) => selectorScope[prismjsScope] = VSCodeScope
+  )
+  return selectorScope
 }

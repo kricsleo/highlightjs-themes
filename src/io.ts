@@ -1,21 +1,32 @@
-import fs from 'fs/promises'
+import fs from 'fs-extra'
 import path from 'path'
 import glob from 'fast-glob'
-import { generateHljsTheme } from './index'
+import { generateHljsTheme } from './highlight-js'
+import { generatePrismjsTheme } from './prism-js'
+import chalk from 'chalk'
 
-export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: string) {
+export async function generateCSS(VSCodeThemePath: string, distDir: string) {
   const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8'})
   const theme = JSON.parse(content)
-  console.log('Generating', VSCodeThemePath)
-  const css = generateHljsTheme(theme)
-  const filename = `${normalizeThemeName(theme.name)}.css`
-  const filepath = path.resolve(hljsCSSDist, filename)
-  await fs.writeFile(filepath, css)
+  const themeName = normalizeThemeName(theme.name)
+  console.log(chalk.yellow('Generating'), '🫧 ', themeName)
+  const hljsTheme = generateHljsTheme(theme)
+  const prismjsTheme = generatePrismjsTheme(theme)
+  const hljsFilepath = path.resolve(distDir, `highlightjs/${themeName}.css`)
+  const prismjsFilepath = path.resolve(distDir, `prismjs/${themeName}.css`)
+  await Promise.all([
+    fs.ensureDir(path.dirname(hljsFilepath)),
+    fs.ensureDir(path.dirname(prismjsFilepath))
+  ])
+  await Promise.all([
+    fs.writeFile(hljsFilepath, hljsTheme),
+    fs.writeFile(prismjsFilepath, prismjsTheme)
+  ])
 }
 
 export async function batchGenerateHljsCSS(VSCodeThemeGlob: string | string[], hljsCSSDist: string) {
   const files = await glob(VSCodeThemeGlob, { absolute: true })
-  await Promise.all(files.map(file => generateHljsCSS(file, hljsCSSDist)))
+  await Promise.all(files.map(file => generateCSS(file, hljsCSSDist)))
 }
 
 function normalizeThemeName(name: string) {

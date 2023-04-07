@@ -20,3 +20,5 @@ export interface VSCodeTheme {
   }
   tokenColors: VSCodeThemeTokenColor[]
 }
+
+export type SelectorScope = Record<string, string>

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 
-const themeImports = import.meta.glob('../../**/*.css')
+const themeImports = import.meta.glob('../../**/highlightjs/*.css')
 const themes = Object.keys(themeImports)
   .map(filepath => filepath.match(/(?<=\/)[^\/]*(?=.css$)/)![0])
 
@@ -19,7 +19,7 @@ function toggleTheme(theme: string) {
   themeEle = document.createElement('link') as HTMLLinkElement
   themeEle.id = id
   themeEle.rel = 'stylesheet'
-  themeEle.href = `/themes/${theme}.css`
+  themeEle.href = `/themes/highlightjs/${theme}.css`
   document.head.appendChild(themeEle)
 }
 </script>
