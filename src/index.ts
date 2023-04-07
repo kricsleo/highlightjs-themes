@@ -1,7 +1,4 @@
 import { VSCodeTheme, VSCodeThemeTokenScope, VSCodeThemeTokenSettings } from './types'
-import fs from 'fs/promises'
-import path from 'path'
-import glob from 'fast-glob'
 import { SCOPE_MAPPINGS } from './mappings'
 
 export function generateHljsTheme(theme: VSCodeTheme) {
@@ -31,21 +28,6 @@ export function generateHljsTheme(theme: VSCodeTheme) {
     `  background: ${global.background};\n` + 
     '}'
   return wrapperCSS + '\n' + tokenCSS
-}
-
-export async function generateHljsCSS(VSCodeThemePath: string, hljsCSSDist: string) {
-  const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8'})
-  const theme = JSON.parse(content)
-  console.log('Generating', VSCodeThemePath)
-  const css = generateHljsTheme(theme)
-  const filename = `${normalizeThemeName(theme.name)}.css`
-  const filepath = path.resolve(hljsCSSDist, filename)
-  await fs.writeFile(filepath, css)
-}
-
-export async function batchGenerateHljsCSS(VSCodeThemeSource: string | string[], hljsCSSDist: string) {
-  const files = await glob(VSCodeThemeSource, { absolute: true })
-  await Promise.all(files.map(file => generateHljsCSS(file, hljsCSSDist)))
 }
 
 /**
@@ -147,12 +129,4 @@ function formatHljsSelector(hljsScope: string) {
     ''
   )
   return parentSelector + childrenSelector
-}
-
-function normalizeThemeName(name: string) {
-  const hyphenateRE = /\B([A-Z\s])/g
-  return name.trim()
-    .replace(/\s/g, '-')
-    .replace(hyphenateRE, '-$1')
-    .toLowerCase()
 }

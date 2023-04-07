@@ -1,4 +1,4 @@
-import { batchGenerateHljsCSS } from '../src/index'
+import { batchGenerateHljsCSS } from '../src/io'
 import path from 'path'
 import url from 'url'
 
