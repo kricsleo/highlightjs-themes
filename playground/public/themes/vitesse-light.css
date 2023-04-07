@@ -1,29 +1,40 @@
-  color: #393a34
-
+pre code.hljs {
+  display: block;
+  color: #393a34;
+  background: #ffffff;
+}
 .hljs-keyword,
 .hljs-literal,
+.hljs-doctag,
+.hljs-name,
 .hljs-selector-tag,
-.hljs-template-tag,
-.hljs-tag {
+.hljs-template-tag {
   color: #1e754f;
 }
-.hljs-built_in,
-.hljs-operator,
-.hljs-property {
-  color: #ab5959;
+.hljs-built_in {
+  color: #998418;
 }
-.hljs-type {
-  color: #2e808f;
-}
-.hljs-number {
-  color: #2f798a;
-}
+.hljs-type,
 .hljs-punctuation,
 .hljs-subst,
 .hljs-meta,
 .hljs-meta.keyword_,
-.hljs-title.function_.invoke__ {
+.hljs-tag {
   color: #999999;
+}
+.hljs-number {
+  color: #2f798a;
+}
+.hljs-operator,
+.hljs-attribute {
+  color: #ab5959;
+}
+.hljs-property,
+.hljs-char.escape_,
+.hljs-variable.language_,
+.hljs-variable.constant_,
+.hljs-template-variable {
+  color: #a65e2b;
 }
 .hljs-regexp {
   color: #ab5e3f;
@@ -32,43 +43,39 @@
 .hljs-symbol {
   color: #b56959;
 }
-.hljs-char.escape_,
 .hljs-class,
-.hljs-title,
-.hljs-template-variable,
-.hljs-variable.language_,
-.hljs-variable.constant_,
 .hljs-title.class_ {
-  color: #a65e2b;
+  color: #2e808f;
 }
 .hljs-function,
+.hljs-title,
 .hljs-title.function_,
-.hljs-name {
+.hljs-title.function_.invoke__ {
   color: #59873a;
 }
 .hljs-variable,
-.hljs-attribute,
+.hljs-title.class_.inherited__,
+.hljs-attr,
 .hljs-selector-id,
 .hljs-selector-class,
 .hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-title.class_.inherited__ {
+.hljs-selector-pseudo {
   color: #b07d48;
 }
 .hljs-params {
   color: #393a34;
 }
 .hljs-comment,
-.hljs-meta.string_,
-.hljs-attr,
-.hljs-quote,
-.hljs-doctag {
+.hljs-meta.string_ {
   color: #a0ada0;
 }
+.hljs-meta.prompt_ {
+  color: #1c6b48;
+}
 .hljs-section,
+.hljs-bullet,
 .hljs-code,
-.hljs-formula,
-.hljs-bullet {
+.hljs-formula {
   color: #1c6b48;
   font-style: bold;
 }
@@ -84,6 +91,9 @@
   color: #393a3490;
   font-style: underline;
 }
+.hljs-quote {
+  color: #2e8f82;
+}
 .hljs-addition {
   color: #22863a;
   background: #f0fff4;
@@ -91,7 +101,4 @@
 .hljs-deletion {
   color: #b31d28;
   background: #ffeef0;
-}
-.hljs-meta.prompt_ {
-  color: #1c6b48;
 }

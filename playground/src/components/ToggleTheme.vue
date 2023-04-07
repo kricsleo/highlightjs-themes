@@ -36,7 +36,7 @@ function toggleTheme(theme: string) {
         v-slot="{ checked }"
         :value="the"
       >
-        <button shrink-0 py-2 px-5 b="1 gray" rounded-4 :class="{ 'bg-rose b-rose': checked }">
+        <button shrink-0 py-2 px-5 b-1 rounded-4 :class="{ 'bg-rose b-rose': checked }">
           {{ the }}
         </button>
       </RadioGroupOption>

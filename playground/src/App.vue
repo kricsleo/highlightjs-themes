@@ -31,4 +31,7 @@ pre code {
   border: 1px solid gray;
   border-radius: .25em;
 }
+pre code * {
+  transition: all linear 100ms;
+}
 </style>

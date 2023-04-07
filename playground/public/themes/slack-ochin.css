@@ -1,5 +1,8 @@
-  color: #000
-
+pre code.hljs {
+  display: block;
+  color: #000;
+  background: #FFF;
+}
 .hljs-keyword,
 .hljs-operator,
 .hljs-meta.keyword_ {
@@ -9,10 +12,12 @@
   color: #1ab394;
 }
 .hljs-type,
-.hljs-selector-tag,
-.hljs-template-tag,
+.hljs-regexp,
+.hljs-subst,
+.hljs-meta,
+.hljs-meta.string_,
 .hljs-tag {
-  color: #0444ac;
+  color: #110000;
 }
 .hljs-literal,
 .hljs-number,
@@ -21,60 +26,65 @@
   color: #174781;
 }
 .hljs-punctuation,
-.hljs-name {
+.hljs-title {
   color: #034c7c;
 }
-.hljs-property {
-  color: #dc3eb7;
-}
-.hljs-regexp,
-.hljs-subst,
-.hljs-meta,
-.hljs-meta.string_,
-.hljs-attr,
-.hljs-quote,
-.hljs-title.function_.invoke__ {
-  color: #110000;
+.hljs-property,
+.hljs-variable,
+.hljs-variable.constant_,
+.hljs-template-variable {
+  color: #2f86d2;
 }
 .hljs-string {
   color: #a44185;
 }
 .hljs-class,
-.hljs-title.class_ {
-  color: #1172c7;
+.hljs-title.class_,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-template-tag {
+  color: #0444ac;
 }
 .hljs-function,
-.hljs-title.function_ {
+.hljs-title.function_,
+.hljs-title.function_.invoke__ {
   color: #7eb233;
 }
-.hljs-variable,
-.hljs-template-variable,
-.hljs-variable.constant_ {
-  color: #2f86d2;
+.hljs-variable.language_ {
+  color: #000000;
 }
-.hljs-title {
-  color: #4FB4D8;
+.hljs-title.class_.inherited__ {
+  color: #b02767;
 }
 .hljs-params {
   color: #b1108e;
 }
-.hljs-comment,
-.hljs-doctag {
+.hljs-comment {
   color: #357b42;
   font-style: italic;
 }
+.hljs-doctag {
+  color: #0991b6;
+}
+.hljs-meta.prompt_,
 .hljs-section,
 .hljs-addition,
-.hljs-deletion,
-.hljs-meta.prompt_ {
+.hljs-deletion {
   color: #00AC8F;
 }
-.hljs-attribute,
+.hljs-attr,
 .hljs-selector-id,
 .hljs-selector-class,
-.hljs-selector-attr {
+.hljs-selector-attr,
+.hljs-selector-pseudo {
   color: #df8618;
   font-style: italic;
+}
+.hljs-attribute {
+  color: #dc3eb7;
+}
+.hljs-bullet {
+  color: #207bb8;
 }
 .hljs-code,
 .hljs-formula {
@@ -92,13 +102,6 @@
 .hljs-link {
   color: #924205;
 }
-.hljs-selector-pseudo,
-.hljs-title.class_.inherited__ {
-  color: #b02767;
-}
-.hljs-variable.language_ {
-  color: #000000;
-}
-.hljs-bullet {
-  color: #207bb8;
+.hljs-quote {
+  color: #87429A;
 }

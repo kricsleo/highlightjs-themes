@@ -1,5 +1,8 @@
-  color: #EEFFFF
-
+pre code.hljs {
+  display: block;
+  color: #EEFFFF;
+  background: #263238;
+}
 .hljs-keyword,
 .hljs-number,
 .hljs-operator,
@@ -12,33 +15,33 @@
   font-style: italic;
 }
 .hljs-type,
-.hljs-class,
-.hljs-function,
-.hljs-title.class_,
-.hljs-title.function_,
-.hljs-name {
-  color: #82AAFF;
+.hljs-property,
+.hljs-subst,
+.hljs-variable,
+.hljs-variable.language_,
+.hljs-variable.constant_,
+.hljs-meta,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-deletion {
+  color: #f07178;
 }
 .hljs-literal {
   color: #ff9cac;
 }
 .hljs-punctuation,
-.hljs-title,
-.hljs-section,
 .hljs-meta.prompt_,
+.hljs-section,
 .hljs-bullet {
   color: #89DDFF;
-}
-.hljs-property {
-  color: #B2CCD6;
 }
 .hljs-regexp,
 .hljs-string,
 .hljs-meta.string_,
-.hljs-attr,
-.hljs-code,
 .hljs-formula,
-.hljs-quote,
 .hljs-addition {
   color: #C3E88D;
 }
@@ -46,34 +49,41 @@
 .hljs-symbol {
   color: #EEFFFF;
 }
-.hljs-subst,
-.hljs-variable,
-.hljs-meta,
-.hljs-selector-tag,
-.hljs-template-variable,
-.hljs-template-tag,
-.hljs-deletion,
-.hljs-variable.language_,
-.hljs-variable.constant_,
-.hljs-title.function_.invoke__,
-.hljs-tag {
-  color: #f07178;
+.hljs-class,
+.hljs-function,
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_,
+.hljs-title.function_.invoke__ {
+  color: #82AAFF;
+}
+.hljs-title.class_.inherited__,
+.hljs-selector-class,
+.hljs-selector-pseudo {
+  color: #FFCB6B;
 }
 .hljs-params {
   font-style: italic;
 }
-.hljs-comment,
-.hljs-doctag {
+.hljs-comment {
   color: #546E7A;
   font-style: italic;
 }
-.hljs-meta.keyword_ {
+.hljs-doctag,
+.hljs-attr,
+.hljs-selector-attr {
+  color: #C792EA;
+}
+.hljs-meta.keyword_,
+.hljs-quote {
   color: #89DDFF;
   font-style: italic;
 }
-.hljs-attribute,
-.hljs-selector-attr {
-  color: #C792EA;
+.hljs-attribute {
+  color: #B2CCD6;
+}
+.hljs-code {
+  color: #EEFFFF90;
 }
 .hljs-strong {
   color: #f07178;
@@ -81,9 +91,4 @@
 }
 .hljs-link {
   font-style: underline;
-}
-.hljs-selector-class,
-.hljs-selector-pseudo,
-.hljs-title.class_.inherited__ {
-  color: #FFCB6B;
 }

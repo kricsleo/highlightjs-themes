@@ -1,71 +1,76 @@
-  color: #abb2bf
-
+pre code.hljs {
+  display: block;
+  color: #abb2bf;
+  background: #282c34;
+}
 .hljs-keyword,
+.hljs-property,
 .hljs-meta.keyword_,
 .hljs-link {
   color: #c678dd;
 }
 .hljs-built_in,
-.hljs-function,
-.hljs-attr,
-.hljs-selector-id,
-.hljs-title.function_,
-.hljs-title.function_.invoke__ {
-  color: #61afef;
+.hljs-punctuation,
+.hljs-variable,
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-deletion {
+  color: #e06c75;
 }
 .hljs-type,
-.hljs-class,
-.hljs-params,
-.hljs-strong,
-.hljs-variable.language_,
-.hljs-variable.constant_,
-.hljs-title.class_,
-.hljs-title.class_.inherited__,
-.hljs-name,
-.hljs-bullet {
-  color: #e5c07b;
+.hljs-operator,
+.hljs-subst,
+.hljs-meta,
+.hljs-tag,
+.hljs-attribute {
+  color: #abb2bf;
 }
 .hljs-literal,
 .hljs-regexp,
 .hljs-char.escape_,
-.hljs-symbol {
+.hljs-symbol,
+.hljs-selector-pseudo {
   color: #56b6c2;
 }
 .hljs-number,
-.hljs-attribute,
+.hljs-doctag,
+.hljs-attr,
 .hljs-selector-class,
-.hljs-selector-attr,
-.hljs-selector-pseudo {
+.hljs-selector-attr {
   color: #d19a66;
 }
-.hljs-operator,
-.hljs-property,
-.hljs-subst,
-.hljs-meta {
-  color: #abb2bf;
-}
-.hljs-punctuation,
-.hljs-variable,
-.hljs-title,
-.hljs-section,
-.hljs-selector-tag,
-.hljs-template-variable,
-.hljs-template-tag,
-.hljs-deletion,
-.hljs-tag {
-  color: #e06c75;
-}
 .hljs-string,
+.hljs-meta.prompt_,
 .hljs-meta.string_,
-.hljs-code,
 .hljs-formula,
-.hljs-quote,
-.hljs-addition,
-.hljs-meta.prompt_ {
+.hljs-addition {
   color: #98c379;
 }
+.hljs-class,
+.hljs-variable.language_,
+.hljs-variable.constant_,
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-params,
+.hljs-bullet,
+.hljs-code,
+.hljs-strong {
+  color: #e5c07b;
+}
+.hljs-function,
+.hljs-title.function_,
+.hljs-title.function_.invoke__,
+.hljs-selector-id {
+  color: #61afef;
+}
 .hljs-comment,
-.hljs-emphasis,
-.hljs-doctag {
+.hljs-emphasis {
   font-style: italic;
+}
+.hljs-quote {
+  color: #5c6370;
 }

@@ -6,7 +6,7 @@ Generate highlightjs themes from [VS Code themes market](https://github.com/micr
 
 ## Reference
 
-- [highlightjs - scope](https://highlightjs.readthedocs.io/en/latest/css-classes-reference.html)
+- [highlightjs - scope](https://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#stylable-scopes)
 
 ## License
 

@@ -1,61 +1,75 @@
-  color: #575279
-
+pre code.hljs {
+  display: block;
+  color: #575279;
+  background: #faf4ed;
+}
 .hljs-keyword,
 .hljs-operator,
 .hljs-char.escape_,
 .hljs-symbol,
+.hljs-doctag,
 .hljs-meta.keyword_ {
   color: #286983;
 }
-.hljs-built_in {
-  color: #b4637a;
-  font-style: italic;
-}
-.hljs-type,
-.hljs-property,
-.hljs-title,
+.hljs-built_in,
+.hljs-class,
+.hljs-title.class_,
+.hljs-meta.prompt_,
+.hljs-name,
+.hljs-attribute,
+.hljs-bullet,
 .hljs-code,
 .hljs-formula,
 .hljs-link,
+.hljs-quote,
 .hljs-selector-tag,
 .hljs-template-tag,
-.hljs-addition,
-.hljs-meta.prompt_,
-.hljs-tag,
-.hljs-bullet {
+.hljs-addition {
   color: #56949f;
+}
+.hljs-type,
+.hljs-subst,
+.hljs-params,
+.hljs-meta {
+  color: #907aa9;
 }
 .hljs-literal,
 .hljs-number,
-.hljs-class,
 .hljs-function,
-.hljs-title.class_,
+.hljs-title,
 .hljs-title.function_,
-.hljs-name {
+.hljs-title.function_.invoke__ {
   color: #d7827e;
 }
 .hljs-punctuation {
   color: #797593;
 }
+.hljs-property,
+.hljs-variable.language_,
+.hljs-variable.constant_,
+.hljs-tag,
+.hljs-template-variable {
+  color: #575279;
+}
 .hljs-regexp,
 .hljs-string,
-.hljs-meta.string_,
-.hljs-attr,
-.hljs-quote {
+.hljs-meta.string_ {
   color: #ea9d34;
-}
-.hljs-subst,
-.hljs-params,
-.hljs-meta,
-.hljs-title.function_.invoke__ {
-  color: #907aa9;
 }
 .hljs-variable {
   color: #d7827e;
   font-style: italic;
 }
-.hljs-comment,
-.hljs-doctag {
+.hljs-title.class_.inherited__,
+.hljs-attr,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #907aa9;
+  font-style: italic;
+}
+.hljs-comment {
   color: #9893a5;
   font-style: italic;
 }
@@ -63,22 +77,8 @@
 .hljs-strong {
   font-style: bold;
 }
-.hljs-attribute,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-title.class_.inherited__ {
-  color: #907aa9;
-  font-style: italic;
-}
 .hljs-emphasis {
   font-style: italic;
-}
-.hljs-template-variable,
-.hljs-variable.language_,
-.hljs-variable.constant_ {
-  color: #575279;
 }
 .hljs-deletion {
   color: #b4637a;

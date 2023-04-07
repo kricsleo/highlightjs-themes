@@ -7,7 +7,8 @@
   "author": "kricsleo",
   "license": "MIT",
   "scripts": {
-    "generate": ". scripts/pullThemes.sh"
+    "pull": ". scripts/pullThemes.sh",
+    "generate": "tsx scripts/generate.ts"
   },
   "dependencies": {
     "chalk": "4",
