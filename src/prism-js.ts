@@ -44,7 +44,7 @@ const PRISMJS_SCOPE_MAPPINGS = {
   '.token.namespace': 'entity.name.namespace',
   '.token.regex': 'string.regexp',
   '.token.important': 'keyword.other.important',
-  '.token.builtin': 'support.function.builtin',
+  '.token.builtin': 'support',
   '.token.url': 'markup.underline.link',
   '.token.symbol': 'constant.other.symbol',
   '.token.module': 'support.other.module',

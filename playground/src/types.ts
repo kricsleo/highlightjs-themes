@@ -1,1 +1,1 @@
-export type Highlighter = 'highlightjs' | 'prismjs'
+export type Highlighter = 'highlightjs' | 'prismjs' | 'shiki'

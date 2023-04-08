@@ -5,6 +5,7 @@ import type { Highlighter } from '../types'
 
 const emits = defineEmits<{
   (e: 'update:highlighter', v: Highlighter): void
+  (e: 'update:theme', v: string): void
 }>()
 
 const themeImports = import.meta.glob('../../**/prismjs/*.css')
@@ -12,20 +13,22 @@ const themes = Object.keys(themeImports)
   .map(filepath => filepath.match(/(?<=\/)[^\/]*(?=.css$)/)![0])
 const theme = ref(themes[0])
 
-const highlighters: Highlighter[] = ['highlightjs', 'prismjs']
+const highlighters: Highlighter[] = ['shiki', 'prismjs', 'highlightjs']
 const highlighter = ref(highlighters[0])
 
-watch(theme, () => toggleTheme(highlighter.value, theme.value), { immediate: true })
+watch(theme, () => emits('update:theme', theme.value), { immediate: true })
 watch(highlighter, () => {
-  toggleTheme(highlighter.value, theme.value)
   emits('update:highlighter', highlighter.value)
+  toggleTheme(highlighter.value, theme.value)
 }, { immediate: true })
 
 function toggleTheme(highlighter: string, theme: string) {
   const id = 'theme'
   let themeEle = document.getElementById(id) as HTMLLinkElement
-  if (themeEle)
-    themeEle.remove()
+  themeEle?.remove()
+
+  if (highlighter === 'shiki')
+    return
 
   themeEle = document.createElement('link') as HTMLLinkElement
   themeEle.id = id
