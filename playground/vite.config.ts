@@ -26,7 +26,9 @@ export default defineConfig({
     Components({ dirs: [] }),
     // https://github.com/antfu/unocss => unocss.config.ts
     Unocss(),
-    UnpluginMarkdown2Html()
+    UnpluginMarkdown2Html({
+      highlight: { prismjs: true },
+    }),
   ],
 
   // https://github.com/vitest-dev/vitest

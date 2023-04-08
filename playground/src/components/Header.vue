@@ -5,7 +5,7 @@ import { toggleDark } from '~/composables/dark'
 <template>
   <nav flex items-center justify-center sticky top-0 py-5 text-30 bg-white dark:bg-dark>
     <h3 text-rose text-center>
-      Preview Highlightjs Themes
+      Preview Highlighter Themes
       <p text-14>
         (Generated from VS Code themes)
       </p>
