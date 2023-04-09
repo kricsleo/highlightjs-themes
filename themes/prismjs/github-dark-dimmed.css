@@ -31,7 +31,6 @@ pre code {
 .token.property,
 .token.selector,
 .token.tag,
-.token.builtin,
 .token.module {
   color: #8ddb8c;
 }
@@ -39,6 +38,7 @@ pre code {
 .token.class-name,
 .token.attr-name,
 .token.namespace,
+.token.builtin,
 .token.type,
 .token.label,
 .token.inline {

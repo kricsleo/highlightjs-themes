@@ -25,8 +25,7 @@ pre code {
 .token.number {
   color: #B48EAD;
 }
-.token.function,
-.token.builtin {
+.token.function {
   color: #88C0D0;
 }
 .token.variable,
@@ -38,6 +37,7 @@ pre code {
 .token.selector,
 .token.attr-name,
 .token.namespace,
+.token.builtin,
 .token.module,
 .token.type,
 .token.label {

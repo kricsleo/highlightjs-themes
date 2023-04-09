@@ -9,7 +9,6 @@ pre code {
 .token.class-name,
 .token.selector,
 .token.namespace,
-.token.builtin,
 .token.label {
   color: #D32F2F;
 }
@@ -30,6 +29,7 @@ pre code {
 .token.boolean,
 .token.variable,
 .token.constant,
+.token.builtin,
 .token.symbol,
 .token.module {
   color: #1976D2;

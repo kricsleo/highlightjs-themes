@@ -10,7 +10,6 @@ pre code {
 .token.operator,
 .token.function,
 .token.atrule,
-.token.builtin,
 .token.module,
 .token.type,
 .token.directive {
@@ -37,7 +36,8 @@ pre code {
 }
 .token.boolean,
 .token.variable,
-.token.constant {
+.token.constant,
+.token.builtin {
   color: #79b8ff;
 }
 .token.tag,

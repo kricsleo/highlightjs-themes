@@ -81,6 +81,7 @@ export const githubThemeSources: [string, string][] = [
  * Value is a list of themes names, as can be found by F1 -> Preferences: Color Theme
  */
 export const marketplaceThemeSources: Record<string, string[]> = {
+  'kricsleo.gentle-clean': ['Gentle Clean Vitesse', 'Gentle Clean Monokai'],
   'equinusocio.vsc-material-theme': [
     'Material Theme',
     'Material Theme Darker',

@@ -1,14 +1,19 @@
 <h1 align="center">
-  highlightjs-themes
+  highlighter-themes
 </h1>
 
-Generate highlightjs themes from [VS Code themes market](https://github.com/microsoft/vscode)
+> ✨ WIP
 
-## Also Support Prism.js!
+Generate and preview highlighter themes from VS Code themes. 
+Including:
 
-## Reference
+- [shiki](https://github.com/shikijs/shiki)
+- [prims.js](https://github.com/PrismJS/prism)
+- [highlight.js](https://github.com/highlightjs/highlight.js/)
 
-- [highlightjs - scope](https://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#stylable-scopes)
+<div align="center">
+  <img src="./screenshots/preview.png" />
+</div>
 
 ## License
 

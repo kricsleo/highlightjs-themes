@@ -12,7 +12,6 @@ pre code {
 .token.property,
 .token.selector,
 .token.important,
-.token.builtin,
 .token.module {
   color: #ab5959;
 }
@@ -47,6 +46,9 @@ pre code {
 }
 .token.regex {
   color: #ab5e3f;
+}
+.token.builtin {
+  color: #998418;
 }
 .token.url {
   color: #393a3490;

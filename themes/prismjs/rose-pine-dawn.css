@@ -39,6 +39,7 @@ pre code {
 .token.selector,
 .token.tag,
 .token.namespace,
+.token.builtin,
 .token.url,
 .token.module,
 .token.type,
@@ -47,10 +48,6 @@ pre code {
 }
 .token.attr-name {
   color: #907aa9;
-  font-style: italic;
-}
-.token.builtin {
-  color: #b4637a;
   font-style: italic;
 }
 .token.parameter {

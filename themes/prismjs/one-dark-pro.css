@@ -15,7 +15,8 @@ pre code {
 }
 .token.punctuation,
 .token.variable,
-.token.tag {
+.token.tag,
+.token.builtin {
   color: #e06c75;
 }
 .token.comment {
@@ -38,8 +39,7 @@ pre code {
   color: #56b6c2;
 }
 .token.function,
-.token.important,
-.token.builtin {
+.token.important {
   color: #61afef;
 }
 .token.class-name,
