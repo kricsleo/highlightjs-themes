@@ -25,7 +25,7 @@ npx tsx scripts/themes/normalizeThemePaths.ts
 echo "> Done normalizing themes"
 
 echo "> Copying themes"
-cp tmp/themes/*.json themes/
+cp tmp/themes/*.json themes/vscode
 echo "> Done copying themes"
 
 echo "> Generating highlightjs themes"
