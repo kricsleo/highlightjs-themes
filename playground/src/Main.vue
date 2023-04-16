@@ -5,33 +5,46 @@ import ToggleTheme from './components/ToggleTheme.vue'
 import type { Highlighter } from './types'
 import Header from '~/components/Header.vue'
 
-const highlighter = ref<Highlighter>()
-const theme = ref<string>()
-const hljsRender = await createMarkdownRender()
-const prismjsRender = await createMarkdownRender({
-  highlight: { prismjs: true },
-})
-const shikiRender = await createMarkdownRender({
-  highlight: { shiki: true },
-})
-const render = computed(() => {
-  switch (highlighter.value) {
-    case 'highlightjs': return hljsRender
-    case 'prismjs': return prismjsRender
-    case 'shiki': return shikiRender
-    default: return hljsRender
-  }
-})
-const html = computed(() => render.value(markdown, theme.value).html)
+const highlighter = ref<Highlighter>('prismjs')
+const theme = ref<string>('vitesse-dark')
+const html = ref<string>()
+
+watch([highlighter, theme], async () => {
+  const render = await (async () => {
+    switch(highlighter.value) {
+      case 'highlightjs': return createMarkdownRender({highlight: { highlightjs: true}})
+      case 'prismjs': return createMarkdownRender({highlight: { prismjs: true}})
+      case 'shiki': return createMarkdownRender({highlight: { shiki: { theme: theme.value as any }}})
+      default: return createMarkdownRender({highlight: { shiki: { theme: theme.value as any }}})
+    }
+  })()
+  html.value = render(markdown).html
+  toggleTheme()
+}, { immediate: true })
+
+function toggleTheme() {
+  const id = 'theme'
+  let themeEle = document.getElementById(id) as HTMLLinkElement
+  themeEle?.remove()
+
+  if (highlighter.value === 'shiki')
+    return
+
+  themeEle = document.createElement('link') as HTMLLinkElement
+  themeEle.id = id
+  themeEle.rel = 'stylesheet'
+  themeEle.href = `/themes/${highlighter.value}/${theme.value}.css`
+  document.head.appendChild(themeEle)
+}
 </script>
 
 <template>
   <main max-w-800 mx-auto px-15 pb-20>
     <Header />
     <ToggleTheme
-      @update:highlighter="highlighter = $event"
-      @update:theme="theme = $event"
-    />
+      v-model:highlighter="highlighter"
+      v-model:theme="theme" />
+    {{ html }}
     <div v-html="html" />
   </main>
 </template>

@@ -6,7 +6,6 @@ import Vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
-import UnpluginMarkdown2Html from 'unplugin-markdown-2-html/vite'
 
 export default defineConfig({
   resolve: {
@@ -26,9 +25,6 @@ export default defineConfig({
     Components({ dirs: [] }),
     // https://github.com/antfu/unocss => unocss.config.ts
     Unocss(),
-    UnpluginMarkdown2Html({
-      highlight: { prismjs: true },
-    }),
   ],
 
   // https://github.com/vitest-dev/vitest

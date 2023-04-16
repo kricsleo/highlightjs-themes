@@ -1,45 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import type { Highlighter } from '../types'
 
+defineProps<{
+  highlighter: Highlighter
+  theme: string
+}>()
 const emits = defineEmits<{
   (e: 'update:highlighter', v: Highlighter): void
   (e: 'update:theme', v: string): void
 }>()
 
+/** 'shiki' */
+const highlighters: Highlighter[] = ['prismjs', 'highlightjs']
+
 const themeImports = import.meta.glob('../../**/prismjs/*.css')
 const themes = Object.keys(themeImports)
   .map(filepath => filepath.match(/(?<=\/)[^\/]*(?=.css$)/)![0])
-const theme = ref(themes[0])
 
-const highlighters: Highlighter[] = ['shiki', 'prismjs', 'highlightjs']
-const highlighter = ref(highlighters[0])
-
-watch(theme, () => emits('update:theme', theme.value), { immediate: true })
-watch(highlighter, () => {
-  emits('update:highlighter', highlighter.value)
-  toggleTheme(highlighter.value, theme.value)
-}, { immediate: true })
-
-function toggleTheme(highlighter: string, theme: string) {
-  const id = 'theme'
-  let themeEle = document.getElementById(id) as HTMLLinkElement
-  themeEle?.remove()
-
-  if (highlighter === 'shiki')
-    return
-
-  themeEle = document.createElement('link') as HTMLLinkElement
-  themeEle.id = id
-  themeEle.rel = 'stylesheet'
-  themeEle.href = `/themes/${highlighter}/${theme}.css`
-  document.head.appendChild(themeEle)
-}
 </script>
 
 <template>
-  <RadioGroup v-model="highlighter">
+  <RadioGroup :model-value="highlighter" @update:model-value="emits('update:highlighter', $event)">
     <RadioGroupLabel text-20>
       Highlighter
     </RadioGroupLabel>
@@ -56,7 +38,7 @@ function toggleTheme(highlighter: string, theme: string) {
       </RadioGroupOption>
     </div>
   </RadioGroup>
-  <RadioGroup v-model="theme" mt-10>
+  <RadioGroup :model-value="theme" @update:model-value="emits('update:theme', $event)" mt-10>
     <RadioGroupLabel text-20>
       Themes
     </RadioGroupLabel>
