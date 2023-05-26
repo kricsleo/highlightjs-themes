@@ -35,6 +35,25 @@ export async function downloadVSCodeTheme(remoteVSCodeTheme: VSCodeThemeId) {
   return themeJSON
 }
 
+export function isDarkTheme() {
+
+}
+
+function isDarkColor(color: string) {
+  const hex = normalizeHexColor(color).replace(/#/, '')
+  const [r, g, b] = hex.match(/.{2}/g)!.map(hex => parseInt(hex, 16))
+  const brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  return brightness <= 155
+}
+
+function normalizeHexColor(color: string) {
+  let hex = color.replace(/#/, '')
+  if(hex.length === 3) {
+    hex = hex.repeat(2)
+  }
+  return '#' + hex
+}
+
 interface VSCodeThemePkgJSON {
   contributes: {
     themes?: Array<{

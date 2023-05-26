@@ -1,3 +1,5 @@
+import type { editor } from 'monaco-editor'
+
 export type VSCodeThemeTokenScope = string | string[]
 export interface VSCodeThemeTokenSettings {
   foreground?: string
@@ -10,6 +12,11 @@ export interface VSCodeThemeTokenColor {
   settings: VSCodeThemeTokenSettings
 }
 
+/**
+ * `<Identifier>.<ThemeName>`
+ * .Eg. `kricsleo.gentle-clen.Gentle Clean Vitesse`
+ */
+export type VSCodeThemeId = `${string}.${string}.${string}`
 export interface VSCodeTheme {
   name: string
   type?: 'dark' | 'light' | string
@@ -22,3 +29,5 @@ export interface VSCodeTheme {
 }
 
 export type SelectorScope = Record<string, string>
+
+export type MonacoTheme = editor.ITokenThemeRule[]
