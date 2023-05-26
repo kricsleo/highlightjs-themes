@@ -10,12 +10,20 @@ export function vscodeTheme2MonacoTheme(vscodeTheme: VSCodeTheme): monaco.editor
       : token.scope || []
     const foreground = token.settings?.foreground?.slice(1)
     const background = token.settings?.background?.slice(1)
-    return scopes.map(scope => ({...token.settings, foreground, background, token: scope }))
+    return scopes.map(scope => ({
+      ...token.settings, 
+      foreground, 
+      background, 
+      token: scope 
+    }))
   }).flat()
+
+  // https://github.com/brijeshb42/monaco-themes/blob/master/src/index.js#L42
+  const colors = vscodeTheme.colors || {}
   return {
     base,
     inherit: true,
-    colors: vscodeTheme.colors || {},
+    colors,
     rules,
     encodedTokensColors: []
   }
