@@ -1,4 +1,4 @@
-import { VSCodeThemeId } from './types'
+import { VSCodeTheme, VSCodeThemeId } from './types'
 import JSZip from 'jszip'
 import {ofetch} from 'ofetch'
 import resolvePath from 'resolve-pathname'
@@ -9,8 +9,8 @@ import json5 from 'json5'
  * `<Identifier>.<ThemeName>`
  * .Eg. `kricsleo.gentle-clen.Gentle Clean Vitesse`
  */
-export async function downloadVSCodeTheme(remoteVSCodeTheme: VSCodeThemeId) {
-  const [publisher, extId, theme] = remoteVSCodeTheme.split('.')
+export async function downloadVSCodeTheme(vscodeThemeId: VSCodeThemeId) {
+  const [publisher, extId, theme] = vscodeThemeId.split('.')
   const themeLink = 
     `https://${publisher}.gallery.vsassets.io` +
     `/_apis/public/gallery/publisher/${publisher}` +
@@ -35,8 +35,15 @@ export async function downloadVSCodeTheme(remoteVSCodeTheme: VSCodeThemeId) {
   return themeJSON
 }
 
-export function isDarkTheme() {
-
+export function isDarkTheme(vscodeTheme: VSCodeTheme) {
+  if(vscodeTheme.type === 'dark') {
+    return true
+  }
+  const background = vscodeTheme.colors?.['editor.background']
+  if(background && isDarkColor(background)) {
+    return true
+  }
+  return false
 }
 
 function isDarkColor(color: string) {
