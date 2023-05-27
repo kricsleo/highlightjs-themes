@@ -55,8 +55,8 @@ function isDarkColor(color: string) {
 
 function normalizeHexColor(color: string) {
   let hex = color.replace(/#/, '')
-  if(hex.length === 3) {
-    hex = hex.repeat(2)
+  if(hex.length < 6) {
+    hex = hex.split('').map(char => char + char).join('')
   }
   return '#' + hex
 }
