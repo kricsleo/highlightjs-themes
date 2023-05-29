@@ -1,4 +1,4 @@
-import { VSCodeTheme } from "./types";
+import { VSCodeTheme, VSCodeThemeId } from "./types";
 import * as monaco from 'monaco-editor';
 import { downloadVSCodeTheme, isDarkTheme } from './vscode'
 
@@ -29,10 +29,15 @@ export function vscodeTheme2MonacoTheme(vscodeTheme: VSCodeTheme): monaco.editor
   }
 }
 
-(async () => {
-  const theme = 'kricsleo.gentle-clean.Gentle Clean Vitesse'
-  // const theme = 'antfu.theme-vitesse.Vitesse Dark Soft'
-  const themeJSON = await downloadVSCodeTheme(theme)
+export async function loadMonacoThemeFromVSCodeTheme(vscodeThemeId: VSCodeThemeId) {
+  const themeJSON = await downloadVSCodeTheme(vscodeThemeId)
   const monacoThemeJSON = vscodeTheme2MonacoTheme(themeJSON)
-  console.log('monacoThemeJSON', JSON.stringify(monacoThemeJSON, null, 2))
-})()
+  return monacoThemeJSON
+}
+
+// (async () => {
+//   const theme = 'kricsleo.gentle-clean.Gentle Clean Vitesse'
+//   // const theme = 'antfu.theme-vitesse.Vitesse Dark Soft'
+//   const monacoThemeJSON = loadMonacoThemeFromVSCodeTheme(theme)
+//   console.log('monacoThemeJSON', JSON.stringify(monacoThemeJSON, null, 2))
+// })()
