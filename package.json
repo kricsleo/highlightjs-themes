@@ -17,6 +17,9 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    "./*": "./dist/*"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
