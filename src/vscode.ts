@@ -1,6 +1,7 @@
 import { VSCodeTheme, VSCodeThemeId } from './types'
 import JSZip from 'jszip'
 import {ofetch} from 'ofetch'
+// @ts-expect-error no types
 import resolvePath from 'resolve-pathname'
 import json5 from 'json5'
 

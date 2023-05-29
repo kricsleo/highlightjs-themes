@@ -1,8 +1,11 @@
 import { VSCodeTheme, VSCodeThemeId } from "./types";
-import * as monaco from 'monaco-editor';
 import { downloadVSCodeTheme, isDarkTheme } from './vscode'
 
-export function vscodeTheme2MonacoTheme(vscodeTheme: VSCodeTheme): monaco.editor.IStandaloneThemeData {
+/**
+ * @param vscodeTheme 
+ * @returns monaco.editor.IStandaloneThemeData
+ */
+export function vscodeTheme2MonacoTheme(vscodeTheme: VSCodeTheme) {
   const base = isDarkTheme(vscodeTheme) ? 'vs-dark' : 'vs'
   const rules = vscodeTheme.tokenColors.map(token => {
     const scopes = typeof token.scope === 'string' 

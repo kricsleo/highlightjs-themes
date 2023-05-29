@@ -1,5 +1,3 @@
-import type { editor } from 'monaco-editor'
-
 export type VSCodeThemeTokenScope = string | string[]
 export interface VSCodeThemeTokenSettings {
   foreground?: string
@@ -29,5 +27,3 @@ export interface VSCodeTheme {
 }
 
 export type SelectorScope = Record<string, string>
-
-export type MonacoTheme = editor.ITokenThemeRule[]

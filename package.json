@@ -1,21 +1,40 @@
 {
   "name": "vscode-theme-to",
+  "type": "module",
   "version": "0.0.0",
+  "packageManager": "pnpm@8.1.1",
   "description": "",
-  "main": "index.js",
-  "keywords": [],
-  "author": "kricsleo",
+  "author": "Kricsleo <kricsleo@163.com>",
   "license": "MIT",
+  "homepage": "https://github.com/kricsleo/vscode-theme-to#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kricsleo/vscode-theme-to.git"
+  },
+  "bugs": "https://github.com/kricsleo/vscode-theme-to/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "pull": ". scripts/pullThemes.sh",
-    "generate": "tsx scripts/generate.ts"
+    "build": "tsup",
+    "lint": "eslint .",
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "bumpp": "^9.1.0",
     "chalk": "4",
     "fast-glob": "^3.2.12",
     "lodash.kebabcase": "^4.1.1",
-    "monaco-editor": "^0.38.0",
+    "tsup": "^6.7.0",
     "tsx": "^3.12.6",
+    "unbuild": "^1.2.0",
     "unzipper": "^0.10.11",
     "vitest": "^0.29.8"
   },
