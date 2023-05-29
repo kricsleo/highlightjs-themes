@@ -18,7 +18,12 @@
     "dist"
   ],
   "exports": {
-    "./*": "./dist/*"
+    "./monaco": {
+      "types": "./dist/monaco.d.ts",
+      "require": "./dist/monaco.cjs",
+      "import": "./dist/monaco.js"
+    },
+    "./*": "./*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
