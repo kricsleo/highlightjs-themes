@@ -1,6 +1,6 @@
 {
-  "name": "highlightjs-themes",
-  "version": "1.0.0",
+  "name": "themes-from-vscode",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "keywords": [],
