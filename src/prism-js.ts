@@ -1,6 +1,5 @@
-import { generateTheme } from '.'
 import { SelectorScope, VSCodeTheme, VSCodeThemeId } from './types'
-import { downloadVSCodeTheme } from './vscode'
+import { downloadVSCodeTheme, getThemeStyle } from './vscode'
 
 /**
  * Prism.js scope -> TextMate(Used by VS Code) scope
@@ -58,8 +57,8 @@ const PRISMJS_SCOPE_MAPPINGS = {
 
 export function vscodeTheme2PrismjsTheme(VSCodeTheme: VSCodeTheme) {
   const prismjsSelectorScope = generatePrismjsSelectorScope()
-  const theme = generateTheme(prismjsSelectorScope, VSCodeTheme)
-  return theme
+  const themeStyle = getThemeStyle(prismjsSelectorScope, VSCodeTheme)
+  return themeStyle
 }
 
 export async function loadPrismjsThemeFromVSCodeTheme(vscodeThemeId: VSCodeThemeId) {

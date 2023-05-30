@@ -1,8 +1,8 @@
 import fs from 'fs-extra'
 import path from 'path'
 import glob from 'fast-glob'
-import { generateHljsTheme } from './highlight-js'
-import { generatePrismjsTheme } from './prism-js'
+import { vscodeTheme2HljsTheme } from './highlight-js'
+import { vscodeTheme2PrismjsTheme } from './prism-js'
 import chalk from 'chalk'
 
 export async function generateCSS(VSCodeThemePath: string, distDir: string) {
@@ -10,8 +10,8 @@ export async function generateCSS(VSCodeThemePath: string, distDir: string) {
   const theme = JSON.parse(content)
   const themeName = normalizeThemeName(theme.name)
   console.log(chalk.yellow('Generating'), '🫧 ', themeName)
-  const hljsTheme = generateHljsTheme(theme)
-  const prismjsTheme = generatePrismjsTheme(theme)
+  const hljsTheme = vscodeTheme2HljsTheme(theme)
+  const prismjsTheme = vscodeTheme2PrismjsTheme(theme)
   const hljsFilepath = path.resolve(distDir, `highlightjs/${themeName}.css`)
   const prismjsFilepath = path.resolve(distDir, `prismjs/${themeName}.css`)
   await Promise.all([
