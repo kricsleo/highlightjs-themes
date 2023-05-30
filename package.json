@@ -65,7 +65,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "unbuind",
+    "build": "unbuild",
     "dev": "unbuild --stub",
     "lint": "eslint .",
     "prepublishOnly": "nr build",
