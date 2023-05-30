@@ -1,6 +1,6 @@
 {
   "name": "vscode-theme-to",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "packageManager": "pnpm@8.1.1",
   "description": "Generate other syntax-highlighted themes from VS Code themes.",
   "author": "Kricsleo <kricsleo@163.com>",
@@ -11,7 +11,15 @@
     "url": "git+https://github.com/kricsleo/vscode-theme-to.git"
   },
   "bugs": "https://github.com/kricsleo/vscode-theme-to/issues",
-  "keywords": ["highlight", "themes", "VS Code", "shiki", "highlight.js", "prismjs", "monaco"],
+  "keywords": [
+    "highlight",
+    "themes",
+    "VS Code",
+    "shiki",
+    "highlight.js",
+    "prismjs",
+    "monaco"
+  ],
   "sideEffects": false,
   "files": [
     "dist"
@@ -48,7 +56,9 @@
   },
   "typesVersions": {
     "*": {
-      "*": ["./dist/*"]
+      "*": [
+        "./dist/*"
+      ]
     }
   },
   "publishConfig": {
