@@ -1,6 +1,6 @@
 {
   "name": "vscode-theme-to",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "packageManager": "pnpm@8.1.1",
   "description": "Generate other syntax-highlighted themes from VS Code themes.",
   "author": "Kricsleo <kricsleo@163.com>",
