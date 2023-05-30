@@ -28,6 +28,11 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    },
     "./monaco": {
       "require": "./dist/monaco.cjs",
       "import": "./dist/monaco.mjs",
@@ -47,17 +52,13 @@
       "require": "./dist/vscode.cjs",
       "import": "./dist/vscode.mjs",
       "types": "./dist/vscode.d.ts"
-    },
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
     }
   },
   "typesVersions": {
     "*": {
       "*": [
-        "./dist/*"
+        "./dist/*",
+        "./*"
       ]
     }
   },
