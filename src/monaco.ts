@@ -44,10 +44,3 @@ export async function loadMonacoThemeFromVSCodeTheme(vscodeThemeId: VSCodeThemeI
   const monacoThemeJSON = vscodeTheme2MonacoTheme(themeJSON)
   return monacoThemeJSON
 }
-
-// (async () => {
-//   const theme = 'kricsleo.gentle-clean.Gentle Clean Vitesse'
-//   // const theme = 'antfu.theme-vitesse.Vitesse Dark Soft'
-//   const monacoThemeJSON = loadMonacoThemeFromVSCodeTheme(theme)
-//   console.log('monacoThemeJSON', JSON.stringify(monacoThemeJSON, null, 2))
-// })()

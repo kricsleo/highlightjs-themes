@@ -6,7 +6,7 @@ import { downloadVSCodeTheme, getThemeStyle } from './vscode';
  * @see https://highlightjs.readthedocs.io/en/latest/css-classes-reference.html#stylable-scopes
  * @see https://macromates.com/manual/en/language_grammars#naming_conventions
  */
-export const HIGHLIGHTJS_SCOPE_MAPPINGS = {
+const HIGHLIGHTJS_SCOPE_MAPPINGS = {
   // 表示关键字，如 if、else、for 等
   "keyword": 'keyword',
   // 表示内置函数或方法
