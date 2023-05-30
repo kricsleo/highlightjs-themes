@@ -64,6 +64,14 @@ export function normalizeHexColor(color: string) {
   return '#' + hex
 }
 
+export function normalizeThemeName(name: string) {
+  const hyphenateRE = /\B([A-Z\s])/g
+  return name.trim()
+    .replace(/\s/g, '-')
+    .replace(hyphenateRE, '-$1')
+    .toLowerCase()
+}
+
 export function getThemeStyle(selectorScope: SelectorScope, theme: VSCodeTheme) {
   const styles = Object.entries(selectorScope)
     .map(([selector, VSCodeScope]) => {
