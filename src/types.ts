@@ -25,5 +25,14 @@ export interface VSCodeTheme {
   }
   tokenColors: VSCodeThemeTokenColor[]
 }
+export interface VSCodeThemePkgJSON {
+  contributes: {
+    themes?: Array<{
+      label: string
+      uiTheme: string
+      path: string
+    }>
+  }
+}
 
 export type SelectorScope = Record<string, string>

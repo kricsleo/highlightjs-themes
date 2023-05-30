@@ -1,5 +1,6 @@
 import { generateTheme } from '.'
-import { SelectorScope, VSCodeTheme } from './types'
+import { SelectorScope, VSCodeTheme, VSCodeThemeId } from './types'
+import { downloadVSCodeTheme } from './vscode'
 
 /**
  * Prism.js scope -> TextMate(Used by VS Code) scope
@@ -55,10 +56,15 @@ const PRISMJS_SCOPE_MAPPINGS = {
   '.token.inline': 'markup.inline'
 }
 
-export function generatePrismjsTheme(VSCodeTheme: VSCodeTheme) {
+export function vscodeTheme2PrismjsTheme(VSCodeTheme: VSCodeTheme) {
   const prismjsSelectorScope = generatePrismjsSelectorScope()
   const theme = generateTheme(prismjsSelectorScope, VSCodeTheme)
   return theme
+}
+
+export async function loadPrismjsThemeFromVSCodeTheme(vscodeThemeId: VSCodeThemeId) {
+  const vscodeTheme = await downloadVSCodeTheme(vscodeThemeId)
+  return vscodeTheme2PrismjsTheme(vscodeTheme)
 }
 
 function generatePrismjsSelectorScope() {

@@ -1,4 +1,4 @@
-import { VSCodeTheme, VSCodeThemeId } from './types'
+import { VSCodeTheme, VSCodeThemeId, VSCodeThemePkgJSON } from './types'
 import JSZip from 'jszip'
 import {ofetch} from 'ofetch'
 // @ts-expect-error no types
@@ -32,6 +32,7 @@ export async function downloadVSCodeTheme(vscodeThemeId: VSCodeThemeId) {
   }
   const themePath = resolvePath(themeConfig.path, 'extension/')
   const themeContent = await zip.file(themePath)!.async('string')
+  // TODO: Is it possible to not use json5?
   const themeJSON = json5.parse(themeContent)
   return themeJSON
 }
@@ -41,33 +42,24 @@ export function isDarkTheme(vscodeTheme: VSCodeTheme) {
     return true
   }
   const background = vscodeTheme.colors?.['editor.background']
-  if(background && isDarkColor(background)) {
+  const foreground = vscodeTheme.colors?.['editor.foreground']
+  if((background && isDarkColor(background)) || (foreground && !isDarkColor(foreground))) {
     return true
   }
   return false
 }
 
-function isDarkColor(color: string) {
+export function isDarkColor(color: string) {
   const hex = normalizeHexColor(color).replace(/#/, '')
   const [r, g, b] = hex.match(/.{2}/g)!.map(hex => parseInt(hex, 16))
   const brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
   return brightness <= 155
 }
 
-function normalizeHexColor(color: string) {
+export function normalizeHexColor(color: string) {
   let hex = color.replace(/#/, '')
   if(hex.length < 6) {
     hex = hex.split('').map(char => char + char).join('')
   }
   return '#' + hex
-}
-
-interface VSCodeThemePkgJSON {
-  contributes: {
-    themes?: Array<{
-      label: string
-      uiTheme: string
-      path: string
-    }>
-  }
 }

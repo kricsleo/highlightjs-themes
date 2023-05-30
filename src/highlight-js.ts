@@ -1,5 +1,6 @@
 import { generateTheme } from '.';
-import { SelectorScope, VSCodeTheme } from './types';
+import { SelectorScope, VSCodeTheme, VSCodeThemeId } from './types';
+import { downloadVSCodeTheme } from './vscode';
 
 /**
  * highlightjs scope -> TextMate(Used by VS Code) scope
@@ -110,10 +111,15 @@ export const HIGHLIGHTJS_SCOPE_MAPPINGS = {
   "deletion": "markup.deleted",
 };
 
-export function generateHljsTheme(VSCodeTheme: VSCodeTheme) {
+export function vscodeTheme2HljsTheme(VSCodeTheme: VSCodeTheme) {
   const hljsSelectorScope = generateHljsSelectorScope()
   const theme = generateTheme(hljsSelectorScope, VSCodeTheme)
   return theme
+}
+
+export async function loadHljsThemeFromVSCodeTheme(vscodeThemeId: VSCodeThemeId) {
+  const vscodeTheme = await downloadVSCodeTheme(vscodeThemeId)
+  return vscodeTheme2HljsTheme(vscodeTheme)
 }
 
 function generateHljsSelectorScope() {

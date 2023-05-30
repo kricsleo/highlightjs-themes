@@ -1,9 +1,8 @@
 {
   "name": "vscode-theme-to",
-  "type": "module",
   "version": "0.0.3",
   "packageManager": "pnpm@8.1.1",
-  "description": "",
+  "description": "Generate other syntax-highlighted themes from VS Code themes.",
   "author": "Kricsleo <kricsleo@163.com>",
   "license": "MIT",
   "homepage": "https://github.com/kricsleo/vscode-theme-to#readme",
@@ -12,30 +11,56 @@
     "url": "git+https://github.com/kricsleo/vscode-theme-to.git"
   },
   "bugs": "https://github.com/kricsleo/vscode-theme-to/issues",
-  "keywords": [],
+  "keywords": ["highlight", "themes", "VS Code", "shiki", "highlight.js", "prismjs", "monaco"],
   "sideEffects": false,
   "files": [
     "dist"
   ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./monaco": {
-      "types": "./dist/monaco.d.ts",
       "require": "./dist/monaco.cjs",
-      "import": "./dist/monaco.js"
+      "import": "./dist/monaco.mjs",
+      "types": "./dist/monaco.d.ts"
     },
-    "./*": "./*"
+    "./prism-js": {
+      "require": "./dist/prism-js.cjs",
+      "import": "./dist/prism-js.mjs",
+      "types": "./dist/prism-js.d.ts"
+    },
+    "./highlight-js": {
+      "require": "./dist/highlight-js.cjs",
+      "import": "./dist/highlight-js.mjs",
+      "types": "./dist/highlight-js.d.ts"
+    },
+    "./vscode": {
+      "require": "./dist/vscode.cjs",
+      "import": "./dist/vscode.mjs",
+      "types": "./dist/vscode.d.ts"
+    },
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["./dist/*"]
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "unbuind",
+    "dev": "unbuild --stub",
     "lint": "eslint .",
     "prepublishOnly": "nr build",
     "release": "bumpp && npm publish",
-    "start": "esno src/index.ts",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
@@ -43,10 +68,8 @@
     "chalk": "4",
     "fast-glob": "^3.2.12",
     "lodash.kebabcase": "^4.1.1",
-    "tsup": "^6.7.0",
     "tsx": "^3.12.6",
     "unbuild": "^1.2.0",
-    "unzipper": "^0.10.11",
     "vitest": "^0.29.8"
   },
   "dependencies": {
