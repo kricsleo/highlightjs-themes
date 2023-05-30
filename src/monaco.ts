@@ -26,7 +26,10 @@ export function vscodeTheme2MonacoTheme(vscodeTheme: VSCodeTheme) {
   }).flat()
 
   // https://github.com/brijeshb42/monaco-themes/blob/master/src/index.js#L42
-  const colors = vscodeTheme.colors || {}
+  const colors = Object.entries(vscodeTheme.colors || {}).reduce((all, [k,v]) => {
+    all[k] = normalizeHexColor(v)
+    return all
+  }, {} as Record<string, string>)
   return {
     base,
     inherit: true,
