@@ -85,6 +85,7 @@
     "vitest": "^0.29.8"
   },
   "dependencies": {
+    "colord": "^2.9.3",
     "json5": "^2.2.3",
     "jszip": "^3.10.1",
     "ofetch": "^1.0.1",

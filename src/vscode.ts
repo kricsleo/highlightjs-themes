@@ -4,6 +4,10 @@ import {ofetch} from 'ofetch'
 // @ts-expect-error no types
 import resolvePath from 'resolve-pathname'
 import json5 from 'json5'
+import { colord, extend } from "colord";
+import namesPlugin from "colord/plugins/names";
+
+extend([namesPlugin])
 
 /**
  * Download theme from VS Code market.
@@ -57,11 +61,7 @@ export function isDarkColor(color: string) {
 }
 
 export function normalizeHexColor(color: string) {
-  let hex = color.replace(/#/, '')
-  if(hex.length < 6) {
-    hex = hex.split('').map(char => char + char).join('')
-  }
-  return '#' + hex
+  return colord(color).toHex()
 }
 
 export function normalizeThemeName(name: string) {

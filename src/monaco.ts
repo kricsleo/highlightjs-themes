@@ -15,14 +15,14 @@ export function vscodeTheme2MonacoTheme(vscodeTheme: VSCodeTheme) {
     const scopes = typeof token.scope === 'string' 
       ? token.scope.split(',')
       : token.scope || []
-    const foreground = token.settings?.foreground && normalizeHexColor(token.settings.foreground).slice(1)
-    const background = token.settings?.background && normalizeHexColor(token.settings.background).slice(1)
-    return scopes.map(scope => ({
-      ...token.settings, 
-      foreground, 
-      background, 
-      token: scope 
-    }))
+    const foreground = token.settings?.foreground && normalizeHexColor(token.settings.foreground)
+    const background = token.settings?.background && normalizeHexColor(token.settings.background)
+    return scopes.map(scope =>  {
+      const settings = { ...token.settings, token: scope }
+      foreground && (settings.foreground = foreground)
+      background && (settings.background = background)
+      return settings
+    })
   }).flat()
 
   // https://github.com/brijeshb42/monaco-themes/blob/master/src/index.js#L42
