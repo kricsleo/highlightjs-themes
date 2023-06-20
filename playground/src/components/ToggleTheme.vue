@@ -11,9 +11,9 @@ const emits = defineEmits<{
   (e: 'update:theme', v: string): void
 }>()
 
-/** 'shiki' */
-const highlighters: Highlighter[] = ['prismjs', 'highlightjs']
+const highlighters: Highlighter[] = ['shiki', 'prism.js', 'highlight.js']
 
+// theme imports
 const themeImports = import.meta.glob('../../**/prismjs/*.css')
 const themes = Object.keys(themeImports)
   .map(filepath => filepath.match(/(?<=\/)[^\/]*(?=.css$)/)![0])
