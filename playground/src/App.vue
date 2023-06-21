@@ -2,7 +2,7 @@
 import ToggleTheme from './components/ToggleTheme.vue'
 import type { Highlighter } from './types'
 import Header from '~/components/Header.vue'
-import { downloadVSCodeTheme, VSCodeTheme, vscodeTheme2HljsTheme, vscodeTheme2PrismjsTheme, VSCodeThemeId } from '../../src'
+import { vscodeTheme2HljsTheme, vscodeTheme2PrismjsTheme, VSCodeThemeId } from '../../src'
 import { getHighlighter, Highlighter as ShikiHighlighter } from 'shiki-es'
 import prismjs from 'prismjs'
 import hljs from 'highlight.js'
@@ -10,9 +10,9 @@ import ts from './fixtures/ts.ts?raw'
 import html from './fixtures/html.html?raw'
 import css from './fixtures/css.css?raw'
 import 'prismjs/components/prism-typescript' 
+import { themes, fetchTheme, insertTheme } from '~/composables/themes'
 
 const highlighters: Highlighter[] = ['shiki', 'highlight.js', 'prism.js']
-const themes = reactive<Record<string, VSCodeTheme>>({})
 const highlighter = ref<Highlighter>('prism.js')
 const theme = ref<VSCodeThemeId>('kricsleo.gentle-clean.Gentle Clean Vitesse')
 let shikiHighlighter: ShikiHighlighter
@@ -44,46 +44,34 @@ watch([highlighter, theme], async () => {
       break; 
     }
     case 'highlight.js': {
-      const highlightjsCSS = vscodeTheme2HljsTheme(themeJSON)
+      purgePreEls()
       hljs.highlightAll()
+      const highlightjsCSS = vscodeTheme2HljsTheme(themeJSON)
       insertTheme(highlightjsCSS)
       break; 
     }
     case 'prism.js': {
+      purgePreEls()
+      prismjs.highlightAll()
       const prismjsCSS = vscodeTheme2PrismjsTheme(themeJSON)
-      prismjs.highlightAll(false, (...rest) => {
-        console.log('el', rest)
-        insertTheme(prismjsCSS)
-      })
+      insertTheme(prismjsCSS)
       break;
     }
   }
 }, { immediate: true })
 
-
-async function fetchTheme(theme: VSCodeThemeId) {
-  if(!themes[theme]) {
-    const themeJSON = await downloadVSCodeTheme(theme)
-    themeJSON.name = theme
-    themes[theme] = themeJSON
-  }
-  return themes[theme]
-}
-
-function insertTheme(css: string) {
-  const id = 'theme';
-  (document.getElementById(id) as HTMLLinkElement)?.remove()
-  const themeEle = document.createElement('style') as HTMLStyleElement
-  themeEle.id = id
-  themeEle.innerHTML = css
-  document.head.appendChild(themeEle)
+function purgePreEls() {
+  const preEls = Array.from(document.getElementsByTagName('pre') as unknown as HTMLElement[])
+  preEls.forEach(el => {
+    el.removeAttribute('class')
+    el.removeAttribute('style')
+  })
 }
 </script>
 
 <template>
   <main max-w-800 mx-auto px-15 pb-20>
     <Header />
-    {{ highlighter }}
     <ToggleTheme 
       :highlighters="highlighters"
       :themes="Object.keys(themes)"

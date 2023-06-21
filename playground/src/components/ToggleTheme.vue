@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import type { Highlighter } from '../types'
+import InputTheme from './InputTheme.vue'
 
 defineProps<{
   highlighter: Highlighter
@@ -15,10 +16,8 @@ const emits = defineEmits<{
 </script>
 
 <template>
+  <h2 text-20> Highlighter </h2>
   <RadioGroup :model-value="highlighter" @update:model-value="emits('update:highlighter', $event)">
-    <RadioGroupLabel text-20>
-      Highlighter
-    </RadioGroupLabel>
     <div flex flex-wrap gap-10 mt-10>
       <RadioGroupOption
         v-for="hl in highlighters"
@@ -32,10 +31,11 @@ const emits = defineEmits<{
       </RadioGroupOption>
     </div>
   </RadioGroup>
+  <div text-20 flex items-center gap-10 mt-20>
+    Themes
+    <InputTheme />
+  </div>
   <RadioGroup :model-value="theme" @update:model-value="emits('update:theme', $event)" mt-10>
-    <RadioGroupLabel text-20>
-      Themes
-    </RadioGroupLabel>
     <div flex flex-wrap gap-10 mt-10>
       <RadioGroupOption
         v-for="the in themes"
