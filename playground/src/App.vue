@@ -9,6 +9,7 @@ import hljs from 'highlight.js'
 import ts from './fixtures/ts.ts?raw'
 import html from './fixtures/html.html?raw'
 import css from './fixtures/css.css?raw'
+import 'prismjs/components/prism-typescript' 
 
 const highlighters: Highlighter[] = ['shiki', 'highlight.js', 'prism.js']
 const themes = reactive<Record<string, VSCodeTheme>>({})
@@ -17,26 +18,28 @@ const theme = ref<VSCodeThemeId>('kricsleo.gentle-clean.Gentle Clean Vitesse')
 let shikiHighlighter: ShikiHighlighter
 
 watch([highlighter, theme], async () => {
-  const themeJSON = await fetchTheme(theme.value)
-  console.log('highlighter.value', highlighter.value, theme.value)
+  const themeName = theme.value
+  const themeJSON = await fetchTheme(themeName)
   switch(highlighter.value) {
     case 'shiki': {
       if(!shikiHighlighter) {
         shikiHighlighter = await getHighlighter({ theme: themeJSON as any, langs: ['html', 'css', 'typescript'] })
       }
-      if(!shikiHighlighter.getLoadedThemes().includes(theme.value as any)) {
+      if(!shikiHighlighter.getLoadedThemes().includes(themeName as any)) {
         await shikiHighlighter.loadTheme(themeJSON as any)
       }
       const codeEls = Array.from(document.getElementsByTagName('code') as unknown as HTMLElement[]).map(el => ({
         el,
         code: el.innerText,
-        className: el.className,
         lang: Array.from(el.classList).find(t => t.startsWith('lang'))!.split('-')[1]
       }))
+      if(highlighter.value !== 'shiki' || theme.value !== themeName ) {
+        return
+      }
       codeEls.forEach(el => {
-        const highlighted = shikiHighlighter.codeToHtml(el.code, { lang: el.lang, theme: theme.value })
+        const highlighted = shikiHighlighter.codeToHtml(el.code, { lang: el.lang, theme: themeName })
+          .replace('><code>', `><code class="language-${el.lang}">`)
         el.el.parentElement!.outerHTML = highlighted
-        el.el.className = el.className
       })
       break; 
     }
@@ -48,7 +51,8 @@ watch([highlighter, theme], async () => {
     }
     case 'prism.js': {
       const prismjsCSS = vscodeTheme2PrismjsTheme(themeJSON)
-      prismjs.highlightAll(false, () => {
+      prismjs.highlightAll(false, (...rest) => {
+        console.log('el', rest)
         insertTheme(prismjsCSS)
       })
       break;
@@ -85,15 +89,12 @@ function insertTheme(css: string) {
       :themes="Object.keys(themes)"
       v-model:highlighter="highlighter" 
       v-model:theme="theme" />
-    <pre>
-      <code class="language-typescript"> {{ ts }} </code>
-    </pre>
-    <pre>
-      <code class="language-html"> {{ html }} </code>
-    </pre>
-    <pre>
-      <code class="language-css"> {{ css }} </code>
-    </pre>
+    <h3 class="py-4 mt-10"># TypeScript</h3>
+    <pre><code class="language-typescript">{{ ts }}</code></pre>
+    <h3 class="py-4 mt-10"># HTML</h3>
+    <pre><code class="language-html">{{ html }}</code></pre>
+    <h3 class="py-4 mt-10"># CSS</h3>
+    <pre><code class="language-css">{{ css }}</code></pre>
   </main>
 </template>
 
