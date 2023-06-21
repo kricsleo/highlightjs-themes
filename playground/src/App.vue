@@ -70,8 +70,8 @@ function purgePreEls() {
 </script>
 
 <template>
+  <Header />
   <main max-w-800 mx-auto px-15 pb-20>
-    <Header />
     <ToggleTheme 
       :highlighters="highlighters"
       :themes="Object.keys(themes)"

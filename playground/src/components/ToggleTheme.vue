@@ -31,10 +31,8 @@ const emits = defineEmits<{
       </RadioGroupOption>
     </div>
   </RadioGroup>
-  <div text-20 flex items-center gap-10 mt-20>
-    Themes
-    <InputTheme />
-  </div>
+  <h2 text-20 mt-20 my-10> Themes </h2>
+  <InputTheme />
   <RadioGroup :model-value="theme" @update:model-value="emits('update:theme', $event)" mt-10>
     <div flex flex-wrap gap-10 mt-10>
       <RadioGroupOption
