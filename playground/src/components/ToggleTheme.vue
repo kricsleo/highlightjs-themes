@@ -4,20 +4,14 @@ import type { Highlighter } from '../types'
 
 defineProps<{
   highlighter: Highlighter
-  theme: string
+  highlighters: Highlighter[]
+  theme: string,
+  themes: string[],
 }>()
 const emits = defineEmits<{
   (e: 'update:highlighter', v: Highlighter): void
   (e: 'update:theme', v: string): void
 }>()
-
-const highlighters: Highlighter[] = ['shiki', 'prism.js', 'highlight.js']
-
-// theme imports
-const themeImports = import.meta.glob('../../**/prismjs/*.css')
-const themes = Object.keys(themeImports)
-  .map(filepath => filepath.match(/(?<=\/)[^\/]*(?=.css$)/)![0])
-
 </script>
 
 <template>
