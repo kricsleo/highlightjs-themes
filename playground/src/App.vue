@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { html } from './index.md'
 import ToggleTheme from './components/ToggleTheme.vue'
 import type { Highlighter } from './types'
 import Header from '~/components/Header.vue'
@@ -7,50 +6,55 @@ import { downloadVSCodeTheme, VSCodeTheme, vscodeTheme2HljsTheme, vscodeTheme2Pr
 import { getHighlighter, Highlighter as ShikiHighlighter } from 'shiki-es'
 import prismjs from 'prismjs'
 import hljs from 'highlight.js'
+import ts from './fixtures/ts.ts?raw'
+import html from './fixtures/html.html?raw'
+import css from './fixtures/css.css?raw'
 
 const highlighters: Highlighter[] = ['shiki', 'highlight.js', 'prism.js']
+const themes = reactive<Record<string, VSCodeTheme>>({})
 const highlighter = ref<Highlighter>('prism.js')
 const theme = ref<VSCodeThemeId>('kricsleo.gentle-clean.Gentle Clean Vitesse')
-const themes = reactive<Record<string, VSCodeTheme>>({})
 let shikiHighlighter: ShikiHighlighter
 
-watchEffect(async () => {
+watch([highlighter, theme], async () => {
   const themeJSON = await fetchTheme(theme.value)
+  console.log('highlighter.value', highlighter.value, theme.value)
   switch(highlighter.value) {
     case 'shiki': {
       if(!shikiHighlighter) {
-        shikiHighlighter = await getHighlighter({ theme: themeJSON as any })
+        shikiHighlighter = await getHighlighter({ theme: themeJSON as any, langs: ['html', 'css', 'typescript'] })
       }
       if(!shikiHighlighter.getLoadedThemes().includes(theme.value as any)) {
-        shikiHighlighter.loadTheme(themeJSON as any)
+        await shikiHighlighter.loadTheme(themeJSON as any)
       }
-      const codeEls = Array.from(document.getElementsByClassName('code') as unknown as HTMLElement[]).map(el => ({
+      const codeEls = Array.from(document.getElementsByTagName('code') as unknown as HTMLElement[]).map(el => ({
         el,
         code: el.innerText,
+        className: el.className,
         lang: Array.from(el.classList).find(t => t.startsWith('lang'))!.split('-')[1]
       }))
       codeEls.forEach(el => {
         const highlighted = shikiHighlighter.codeToHtml(el.code, { lang: el.lang, theme: theme.value })
-        el.el.innerHTML = highlighted
+        el.el.parentElement!.outerHTML = highlighted
+        el.el.className = el.className
       })
-      return 
+      break; 
     }
     case 'highlight.js': {
       const highlightjsCSS = vscodeTheme2HljsTheme(themeJSON)
       hljs.highlightAll()
       insertTheme(highlightjsCSS)
-      return 
+      break; 
     }
     case 'prism.js': {
       const prismjsCSS = vscodeTheme2PrismjsTheme(themeJSON)
-      return (code: string, lang: string, theme: string) => {
-        prismjs.highlightAll(false, () => {
-          insertTheme(prismjsCSS)
-        })
-      }
+      prismjs.highlightAll(false, () => {
+        insertTheme(prismjsCSS)
+      })
+      break;
     }
   }
-})
+}, { immediate: true })
 
 
 async function fetchTheme(theme: VSCodeThemeId) {
@@ -75,12 +79,21 @@ function insertTheme(css: string) {
 <template>
   <main max-w-800 mx-auto px-15 pb-20>
     <Header />
+    {{ highlighter }}
     <ToggleTheme 
       :highlighters="highlighters"
       :themes="Object.keys(themes)"
       v-model:highlighter="highlighter" 
       v-model:theme="theme" />
-    <section v-html="html" />
+    <pre>
+      <code class="language-typescript"> {{ ts }} </code>
+    </pre>
+    <pre>
+      <code class="language-html"> {{ html }} </code>
+    </pre>
+    <pre>
+      <code class="language-css"> {{ css }} </code>
+    </pre>
   </main>
 </template>
 

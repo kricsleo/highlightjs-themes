@@ -6,7 +6,6 @@ import Vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
-import md2Html from 'unplugin-markdown-2-html/vite'
 
 export default defineConfig({
   resolve: {
@@ -26,6 +25,5 @@ export default defineConfig({
     Components({ dirs: [] }),
     // https://github.com/antfu/unocss => unocss.config.ts
     Unocss(),
-    md2Html(),
   ],
 })
