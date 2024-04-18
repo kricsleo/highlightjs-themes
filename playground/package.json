@@ -6,8 +6,7 @@
     "dev": "vite --port 3333 --open",
     "typecheck": "vue-tsc --noEmit",
     "preview": "vite preview",
-    "test": "vitest",
-    "postinstall": "npx simple-git-hooks"
+    "test": "vitest"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.12",

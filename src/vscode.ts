@@ -1,9 +1,9 @@
 import { SelectorScope, VSCodeTheme, VSCodeThemeId, VSCodeThemePkgJSON, VSCodeThemeTokenScope, VSCodeThemeTokenSettings } from './types'
 import JSZip from 'jszip'
-import {ofetch} from 'ofetch'
+import { ofetch } from 'ofetch'
 // @ts-expect-error no types
 import resolvePath from 'resolve-pathname'
-import json5 from 'json5'
+import stripJSONComment from 'strip-json-comments'
 import { colord, extend } from "colord";
 import namesPlugin from "colord/plugins/names";
 
@@ -16,19 +16,19 @@ extend([namesPlugin])
  */
 export async function downloadVSCodeTheme(vscodeThemeId: VSCodeThemeId) {
   const [publisher, extId, theme] = vscodeThemeId.split('.')
-  const themeLink = 
+  const themeLink =
     `https://${publisher}.gallery.vsassets.io` +
     `/_apis/public/gallery/publisher/${publisher}` +
     `/extension/${extId}/latest` +
     `/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage`
-  const buffer = await ofetch(themeLink, { responseType: 'arrayBuffer'})
+  const buffer = await ofetch(themeLink, { responseType: 'arrayBuffer' })
   const zip = await JSZip.loadAsync(buffer)
   const pkgContent = await zip.file('extension/package.json')!.async('string')
   const pkgJSON: VSCodeThemePkgJSON = JSON.parse(pkgContent);
   const themeConfig = (pkgJSON.contributes.themes || []).find(
     t => t.label.toLowerCase() === theme.toLowerCase()
   )
-  if(!themeConfig) {
+  if (!themeConfig) {
     const avaliableThemes = (pkgJSON.contributes.themes || [])
       .map(t => `\`${t.label}\``)
       .join(' | ')
@@ -36,18 +36,17 @@ export async function downloadVSCodeTheme(vscodeThemeId: VSCodeThemeId) {
   }
   const themePath = resolvePath(themeConfig.path, 'extension/')
   const themeContent = await zip.file(themePath)!.async('string')
-  // TODO: Is it possible to not use json5?
-  const themeJSON = json5.parse(themeContent)
+  const themeJSON = JSON.parse(stripJSONComment(themeContent))
   return themeJSON
 }
 
 export function isDarkTheme(vscodeTheme: VSCodeTheme) {
-  if(vscodeTheme.type === 'dark') {
+  if (vscodeTheme.type === 'dark') {
     return true
   }
   const background = vscodeTheme.colors?.['editor.background']
   const foreground = vscodeTheme.colors?.['editor.foreground']
-  if((background && isDarkColor(background)) || (foreground && !isDarkColor(foreground))) {
+  if ((background && isDarkColor(background)) || (foreground && !isDarkColor(foreground))) {
     return true
   }
   return false
@@ -78,9 +77,9 @@ export function getThemeStyle(selectorScope: SelectorScope, theme: VSCodeTheme) 
       const style = getVSCodeScopeStyle(VSCodeScope, theme)
       return { selector, style }
     })
-    .filter(css => css.style) as Array<{selector: string; style: string}>
+    .filter(css => css.style) as Array<{ selector: string; style: string }>
   const combinedStyles = styles.reduce((all, style) => {
-    if(all[style.style]) {
+    if (all[style.style]) {
       all[style.style] += `,\n${style.selector}`
     } else {
       all[style.style] = style.selector
@@ -91,11 +90,11 @@ export function getThemeStyle(selectorScope: SelectorScope, theme: VSCodeTheme) 
     .map(([style, selector]) => `${selector} ${style}`)
     .join('\n')
   const global = getDefaultThemeSetting(theme)
-  const wrapperCSS = 
+  const wrapperCSS =
     'pre code {\n' +
     '  display: block;\n' +
-    `  color: ${global.foreground};\n` + 
-    `  background: ${global.background};\n` + 
+    `  color: ${global.foreground};\n` +
+    `  background: ${global.background};\n` +
     '}'
   return wrapperCSS + '\n' + tokenCSS
 }
@@ -108,7 +107,7 @@ export function getVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
   const tokenMatchScores = theme.tokenColors
     .filter(token => token.scope)
     .map(token => ({
-      token, 
+      token,
       score: scoreScopeMatch(scope, token.scope!)
     }))
   const maxMatchedToken = tokenMatchScores.reduce((all, cur) => cur.score > all.score ? cur : all, tokenMatchScores[0])
@@ -118,28 +117,28 @@ export function getVSCodeScopeStyle(scope: string, theme: VSCodeTheme) {
 }
 
 export function scoreScopeMatch(sourceScope: string, targetScope: VSCodeThemeTokenScope): number {
-  if(Array.isArray(targetScope)) {
+  if (Array.isArray(targetScope)) {
     const isExactlyMathched = targetScope.some(s => s === sourceScope)
-    if(isExactlyMathched) {
+    if (isExactlyMathched) {
       return Infinity
     } else {
       const scores = targetScope.map(s => scoreScopeMatch(sourceScope, s))
       const maxScore = scores.reduce((all, cur) => Math.max(all, cur), 0)
       return maxScore
     }
-  } else if(!targetScope) {
+  } else if (!targetScope) {
     return 0
   } else {
-    if(sourceScope === targetScope) {
+    if (sourceScope === targetScope) {
       return Infinity
     } else {
       const sourceTokens = sourceScope.split('.')
       const targetTokens = targetScope.split('.')
       let score = 0
-      while(sourceTokens.length && targetTokens.length) {
+      while (sourceTokens.length && targetTokens.length) {
         const sourceToken = sourceTokens.shift()
         const targetToken = targetTokens.shift()
-        if(sourceToken === targetToken) {
+        if (sourceToken === targetToken) {
           score += 1
         } else {
           break;
@@ -179,11 +178,11 @@ export function getDefaultThemeSetting(theme: VSCodeTheme) {
   return { foreground, background }
 
   function parseDefaultColor(key: 'foreground' | 'background') {
-    const VSCODE_FALLBACK_SETTING = key === 'foreground' 
+    const VSCODE_FALLBACK_SETTING = key === 'foreground'
       ? VSCODE_FALLBACK_EDITOR_FG
       : VSCODE_FALLBACK_EDITOR_BG
-    const VSCODE_FALLBACK_COLOR = theme.type === 'light' 
-      ? VSCODE_FALLBACK_SETTING.light 
+    const VSCODE_FALLBACK_COLOR = theme.type === 'light'
+      ? VSCODE_FALLBACK_SETTING.light
       : VSCODE_FALLBACK_SETTING.dark
     return globalSetting?.settings?.[key]
       || theme.colors?.[`editor.${key}`]

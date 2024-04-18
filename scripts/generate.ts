@@ -1,6 +1,6 @@
-import path from 'path'
-import url from 'url'
-import fs from 'fs-extra'
+import path from 'node:path'
+import url from 'node:url'
+import fs from 'node:fs/promises'
 import glob from 'fast-glob'
 import chalk from 'chalk'
 import { vscodeTheme2HljsTheme } from '../src/highlight-js'
@@ -26,7 +26,7 @@ const playgroundThemeDist = path.resolve(_dirname, '../playground/public/themes'
 })()
 
 export async function generateCSS(VSCodeThemePath: string, distDir: string) {
-  const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8'})
+  const content = await fs.readFile(VSCodeThemePath, { encoding: 'utf-8' })
   const theme = JSON.parse(content)
   const themeName = normalizeThemeName(theme.name)
   console.log(chalk.yellow('Generating'), '🫧 ', themeName)
@@ -37,11 +37,11 @@ export async function generateCSS(VSCodeThemePath: string, distDir: string) {
   const prismjsFilepath = path.resolve(distDir, `prismjs/${themeName}.css`)
   const monacoFilepath = path.resolve(distDir, `monaco/${themeName}.json`)
   await Promise.all([
-    [hljsTheme, hljsFilepath], 
+    [hljsTheme, hljsFilepath],
     [prismjsTheme, prismjsFilepath],
     [monacoTheme, monacoFilepath],
   ].map(async ([themeData, filepath]) => {
-    fs.ensureDir(path.dirname(filepath))
+    fs.mkdir(path.dirname(filepath), { recursive: true })
     fs.writeFile(filepath, themeData)
   }))
 }
